@@ -7,8 +7,9 @@ import { Input } from "@/components/ui/input";
 import { Switch } from "@/components/ui/switch";
 import { Progress } from "@/components/ui/progress";
 import { Card, CardContent } from "@/components/ui/card";
-import { ArrowRight, ArrowLeft, ExternalLink } from "lucide-react";
+import { ArrowRight, ArrowLeft, ExternalLink, Info } from "lucide-react";
 import ResultsSection from "./ResultsSection";
+import { TrustBannerPlaza, TrustBannerAwards } from "./TrustBanners";
 import { trackCustomEvent } from "@/lib/facebook-pixel";
 
 const TOTAL_STEPS = 6;
@@ -24,7 +25,7 @@ interface QuizAnswers {
 
 const QuizFlow = () => {
   const { t } = useLanguage();
-  const [step, setStep] = useState(0); // 0 = hero, 1-6 = questions, 7 = results
+  const [step, setStep] = useState(0);
   const [answers, setAnswers] = useState<QuizAnswers>({
     usesShopify: null,
     productCount: 100,
@@ -155,11 +156,25 @@ const QuizFlow = () => {
                 </div>
               )}
 
-              {/* Step 2: Product count slider */}
+              {/* Step 2: Product count — slider + synced input */}
               {step === 2 && (
                 <div className="space-y-6">
                   <h2 className="font-sora text-xl font-bold text-primary">{t("q2Title") as string}</h2>
-                  <div className="pt-4">
+                  <div className="pt-4 space-y-4">
+                    <div className="flex items-center justify-center gap-3">
+                      <Input
+                        type="number"
+                        min={1}
+                        max={10000}
+                        value={answers.productCount}
+                        onChange={(e) => {
+                          const v = Math.min(10000, Math.max(1, parseInt(e.target.value) || 1));
+                          setAnswers((a) => ({ ...a, productCount: v }));
+                        }}
+                        className="w-28 text-center text-2xl font-bold rounded-xl"
+                      />
+                      <span className="text-muted-foreground">{t("q2Label") as string}</span>
+                    </div>
                     <Slider
                       value={[answers.productCount]}
                       onValueChange={([v]) => setAnswers((a) => ({ ...a, productCount: v }))}
@@ -168,26 +183,38 @@ const QuizFlow = () => {
                       step={10}
                       className="w-full"
                     />
-                    <div className="text-center mt-4">
-                      <span className="text-3xl font-bold text-primary">{answers.productCount.toLocaleString()}</span>
-                      <span className="text-muted-foreground ml-2">{t("q2Label") as string}</span>
-                    </div>
                   </div>
                 </div>
               )}
 
-              {/* Step 3: Expected volume */}
+              {/* Step 3: Expected volume per month — slider + synced input */}
               {step === 3 && (
                 <div className="space-y-6">
                   <h2 className="font-sora text-xl font-bold text-primary">{t("q3Title") as string}</h2>
-                  <Input
-                    type="number"
-                    min={0}
-                    value={answers.expectedVolume || ""}
-                    onChange={(e) => setAnswers((a) => ({ ...a, expectedVolume: parseInt(e.target.value) || 0 }))}
-                    placeholder={t("q3Placeholder") as string}
-                    className="text-lg py-6 rounded-xl text-center"
-                  />
+                  <div className="pt-4 space-y-4">
+                    <div className="flex items-center justify-center gap-3">
+                      <Input
+                        type="number"
+                        min={0}
+                        max={1000}
+                        value={answers.expectedVolume}
+                        onChange={(e) => {
+                          const v = Math.min(1000, Math.max(0, parseInt(e.target.value) || 0));
+                          setAnswers((a) => ({ ...a, expectedVolume: v }));
+                        }}
+                        className="w-28 text-center text-2xl font-bold rounded-xl"
+                      />
+                      <span className="text-muted-foreground">{t("q3Label") as string}</span>
+                    </div>
+                    <Slider
+                      value={[answers.expectedVolume]}
+                      onValueChange={([v]) => setAnswers((a) => ({ ...a, expectedVolume: v }))}
+                      min={0}
+                      max={1000}
+                      step={5}
+                      className="w-full"
+                    />
+                  </div>
                 </div>
               )}
 
@@ -231,11 +258,11 @@ const QuizFlow = () => {
                 </div>
               )}
 
-              {/* Step 6: SEO control toggle */}
+              {/* Step 6: SEO control toggle + info box */}
               {step === 6 && (
                 <div className="space-y-6">
                   <h2 className="font-sora text-xl font-bold text-primary">{t("q6Title") as string}</h2>
-                  <div className="flex items-center justify-center gap-6 py-8">
+                  <div className="flex items-center justify-center gap-6 py-6">
                     <span className={`text-lg font-medium ${!answers.hasSeoControl ? "text-primary" : "text-muted-foreground"}`}>
                       {t("q6No") as string}
                     </span>
@@ -248,10 +275,24 @@ const QuizFlow = () => {
                       {t("q6Yes") as string}
                     </span>
                   </div>
+                  {/* Info box */}
+                  <div className="bg-accent/10 border border-accent/30 rounded-xl p-4 space-y-2">
+                    <div className="flex items-center gap-2">
+                      <Info className="h-4 w-4 text-accent shrink-0" />
+                      <h4 className="font-sora font-semibold text-primary text-sm">{t("q6InfoTitle") as string}</h4>
+                    </div>
+                    <p className="text-xs text-muted-foreground leading-relaxed">
+                      {t("q6InfoText") as string}
+                    </p>
+                  </div>
                 </div>
               )}
             </CardContent>
           </Card>
+
+          {/* Dynamic trust banners */}
+          {step === 5 && <TrustBannerPlaza />}
+          {step === 6 && <TrustBannerAwards />}
         </motion.div>
       </AnimatePresence>
 
