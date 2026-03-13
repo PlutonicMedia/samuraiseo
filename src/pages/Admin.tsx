@@ -1,0 +1,197 @@
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { supabase } from "@/integrations/supabase/client";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { toast } from "sonner";
+import { LogOut, Save } from "lucide-react";
+
+const Admin = () => {
+  const navigate = useNavigate();
+  const [user, setUser] = useState<any>(null);
+  const [submissions, setSubmissions] = useState<any[]>([]);
+  const [seoRequests, setSeoRequests] = useState<any[]>([]);
+  const [settings, setSettings] = useState({ hubspot_calendar_url: "", facebook_pixel_id: "" });
+  const [savingSettings, setSavingSettings] = useState(false);
+
+  useEffect(() => {
+    const checkAuth = async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) {
+        navigate("/admin/login");
+        return;
+      }
+      setUser(user);
+      fetchData();
+    };
+    checkAuth();
+  }, [navigate]);
+
+  const fetchData = async () => {
+    const [subRes, seoRes, settingsRes] = await Promise.all([
+      supabase.from("quiz_submissions").select("*").order("created_at", { ascending: false }),
+      supabase.from("seo_text_requests").select("*").order("created_at", { ascending: false }),
+      supabase.from("site_settings").select("*").limit(1).single(),
+    ]);
+    if (subRes.data) setSubmissions(subRes.data);
+    if (seoRes.data) setSeoRequests(seoRes.data);
+    if (settingsRes.data) setSettings({
+      hubspot_calendar_url: settingsRes.data.hubspot_calendar_url || "",
+      facebook_pixel_id: settingsRes.data.facebook_pixel_id || "",
+    });
+  };
+
+  const saveSettings = async () => {
+    setSavingSettings(true);
+    try {
+      const { error } = await supabase
+        .from("site_settings")
+        .upsert({ id: 1, ...settings }, { onConflict: "id" });
+      if (error) throw error;
+      toast.success("Settings saved!");
+    } catch {
+      toast.error("Failed to save settings.");
+    } finally {
+      setSavingSettings(false);
+    }
+  };
+
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
+    navigate("/admin/login");
+  };
+
+  if (!user) return null;
+
+  return (
+    <div className="min-h-screen bg-background">
+      <header className="border-b border-border/50 px-6 py-4 flex justify-between items-center">
+        <h1 className="font-sora text-lg font-bold text-primary">⚔️ Samurai Admin</h1>
+        <Button variant="ghost" onClick={handleLogout} className="gap-2">
+          <LogOut className="h-4 w-4" /> Logout
+        </Button>
+      </header>
+
+      <main className="container max-w-6xl mx-auto py-8 px-4">
+        <Tabs defaultValue="submissions">
+          <TabsList className="mb-6">
+            <TabsTrigger value="submissions">Form Entries ({submissions.length})</TabsTrigger>
+            <TabsTrigger value="seo">SEO Requests ({seoRequests.length})</TabsTrigger>
+            <TabsTrigger value="settings">Settings</TabsTrigger>
+          </TabsList>
+
+          <TabsContent value="submissions">
+            <Card>
+              <CardContent className="pt-6 overflow-auto">
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead>Date</TableHead>
+                      <TableHead>Name</TableHead>
+                      <TableHead>Email</TableHead>
+                      <TableHead>Phone</TableHead>
+                      <TableHead>Company</TableHead>
+                      <TableHead>Products</TableHead>
+                      <TableHead>Volume 2026</TableHead>
+                      <TableHead>Min/Item</TableHead>
+                      <TableHead>Revenue</TableHead>
+                      <TableHead>SEO Control</TableHead>
+                      <TableHead>Hours Saved</TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {submissions.map((s) => (
+                      <TableRow key={s.id}>
+                        <TableCell className="text-xs">{new Date(s.created_at).toLocaleDateString()}</TableCell>
+                        <TableCell>{s.name}</TableCell>
+                        <TableCell>{s.email}</TableCell>
+                        <TableCell>{s.phone}</TableCell>
+                        <TableCell>{s.company}</TableCell>
+                        <TableCell>{s.product_count}</TableCell>
+                        <TableCell>{s.expected_volume}</TableCell>
+                        <TableCell>{s.time_per_item}</TableCell>
+                        <TableCell className="text-xs">{s.revenue_range}</TableCell>
+                        <TableCell>{s.has_seo_control ? "Yes" : "No"}</TableCell>
+                        <TableCell className="font-bold">{s.saved_hours}h</TableCell>
+                      </TableRow>
+                    ))}
+                    {submissions.length === 0 && (
+                      <TableRow><TableCell colSpan={11} className="text-center text-muted-foreground">No entries yet</TableCell></TableRow>
+                    )}
+                  </TableBody>
+                </Table>
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          <TabsContent value="seo">
+            <Card>
+              <CardContent className="pt-6 overflow-auto">
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead>Date</TableHead>
+                      <TableHead>Website URL</TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {seoRequests.map((r) => (
+                      <TableRow key={r.id}>
+                        <TableCell className="text-xs">{new Date(r.created_at).toLocaleDateString()}</TableCell>
+                        <TableCell>
+                          <a href={r.website_url} target="_blank" rel="noopener noreferrer" className="text-accent hover:underline">
+                            {r.website_url}
+                          </a>
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                    {seoRequests.length === 0 && (
+                      <TableRow><TableCell colSpan={2} className="text-center text-muted-foreground">No requests yet</TableCell></TableRow>
+                    )}
+                  </TableBody>
+                </Table>
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          <TabsContent value="settings">
+            <Card className="max-w-lg">
+              <CardHeader>
+                <CardTitle className="font-sora">Site Settings</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div>
+                  <label className="text-sm font-medium text-foreground mb-1 block">HubSpot Calendar URL</label>
+                  <Input
+                    value={settings.hubspot_calendar_url}
+                    onChange={(e) => setSettings((s) => ({ ...s, hubspot_calendar_url: e.target.value }))}
+                    placeholder="https://meetings.hubspot.com/..."
+                    className="rounded-xl"
+                  />
+                </div>
+                <div>
+                  <label className="text-sm font-medium text-foreground mb-1 block">Facebook Pixel ID</label>
+                  <Input
+                    value={settings.facebook_pixel_id}
+                    onChange={(e) => setSettings((s) => ({ ...s, facebook_pixel_id: e.target.value }))}
+                    placeholder="123456789012345"
+                    className="rounded-xl"
+                  />
+                </div>
+                <Button onClick={saveSettings} disabled={savingSettings} className="gap-2 rounded-full">
+                  <Save className="h-4 w-4" />
+                  {savingSettings ? "Saving..." : "Save Settings"}
+                </Button>
+              </CardContent>
+            </Card>
+          </TabsContent>
+        </Tabs>
+      </main>
+    </div>
+  );
+};
+
+export default Admin;
