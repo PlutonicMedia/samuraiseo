@@ -5,7 +5,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
-import { Lock, UserPlus } from "lucide-react";
+import samuraiLogo from "@/assets/samurai-logo.png";
 
 const AdminLogin = () => {
   const [email, setEmail] = useState("");
@@ -40,11 +40,7 @@ const AdminLogin = () => {
       <Card className="w-full max-w-sm shadow-lg">
         <CardContent className="pt-8 pb-8">
           <div className="text-center mb-6">
-            {isSignUp ? (
-              <UserPlus className="h-10 w-10 mx-auto text-primary mb-2" />
-            ) : (
-              <Lock className="h-10 w-10 mx-auto text-primary mb-2" />
-            )}
+            <img src={samuraiLogo} alt="Samurai SEO" className="h-12 w-auto mx-auto mb-3" />
             <h1 className="font-sora text-xl font-bold text-primary">
               {isSignUp ? "Admin Sign Up" : "Admin Login"}
             </h1>

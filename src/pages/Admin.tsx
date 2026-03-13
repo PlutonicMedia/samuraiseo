@@ -7,14 +7,15 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
-import { LogOut, Save } from "lucide-react";
+import { LogOut, Save, Mail } from "lucide-react";
+import samuraiLogo from "@/assets/samurai-logo.png";
 
 const Admin = () => {
   const navigate = useNavigate();
   const [user, setUser] = useState<any>(null);
   const [submissions, setSubmissions] = useState<any[]>([]);
   const [seoRequests, setSeoRequests] = useState<any[]>([]);
-  const [settings, setSettings] = useState({ hubspot_calendar_url: "", facebook_pixel_id: "" });
+  const [settings, setSettings] = useState({ hubspot_calendar_url: "", facebook_pixel_id: "", notification_email: "" });
   const [savingSettings, setSavingSettings] = useState(false);
 
   useEffect(() => {
@@ -25,10 +26,14 @@ const Admin = () => {
         return;
       }
       setUser(user);
-      fetchData();
     };
     checkAuth();
   }, [navigate]);
+
+  useEffect(() => {
+    if (!user) return;
+    fetchData();
+  }, [user]);
 
   const fetchData = async () => {
     const [subRes, seoRes, settingsRes] = await Promise.all([
@@ -36,11 +41,19 @@ const Admin = () => {
       supabase.from("seo_text_requests").select("*").order("created_at", { ascending: false }),
       supabase.from("site_settings").select("*").limit(1).single(),
     ]);
+    if (subRes.error) {
+      console.error("Quiz submissions fetch error:", subRes.error);
+      toast.error("Could not load form entries. Check admin role permissions.");
+    }
+    if (seoRes.error) {
+      console.error("SEO requests fetch error:", seoRes.error);
+    }
     if (subRes.data) setSubmissions(subRes.data);
     if (seoRes.data) setSeoRequests(seoRes.data);
     if (settingsRes.data) setSettings({
       hubspot_calendar_url: settingsRes.data.hubspot_calendar_url || "",
       facebook_pixel_id: settingsRes.data.facebook_pixel_id || "",
+      notification_email: (settingsRes.data as any).notification_email || "",
     });
   };
 
@@ -49,7 +62,7 @@ const Admin = () => {
     try {
       const { error } = await supabase
         .from("site_settings")
-        .upsert({ id: 1, ...settings }, { onConflict: "id" });
+        .upsert({ id: 1, ...settings } as any, { onConflict: "id" });
       if (error) throw error;
       toast.success("Settings saved!");
     } catch {
@@ -69,7 +82,10 @@ const Admin = () => {
   return (
     <div className="min-h-screen bg-background">
       <header className="border-b border-border/50 px-6 py-4 flex justify-between items-center">
-        <h1 className="font-sora text-lg font-bold text-primary">⚔️ Samurai Admin</h1>
+        <div className="flex items-center gap-2">
+          <img src={samuraiLogo} alt="Samurai SEO" className="h-10 w-auto" />
+          <span className="font-sora text-lg font-bold text-primary">Admin</span>
+        </div>
         <Button variant="ghost" onClick={handleLogout} className="gap-2">
           <LogOut className="h-4 w-4" /> Logout
         </Button>
@@ -158,35 +174,62 @@ const Admin = () => {
           </TabsContent>
 
           <TabsContent value="settings">
-            <Card className="max-w-lg">
-              <CardHeader>
-                <CardTitle className="font-sora">Site Settings</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div>
-                  <label className="text-sm font-medium text-foreground mb-1 block">HubSpot Calendar URL</label>
-                  <Input
-                    value={settings.hubspot_calendar_url}
-                    onChange={(e) => setSettings((s) => ({ ...s, hubspot_calendar_url: e.target.value }))}
-                    placeholder="https://meetings.hubspot.com/..."
-                    className="rounded-xl"
-                  />
-                </div>
-                <div>
-                  <label className="text-sm font-medium text-foreground mb-1 block">Facebook Pixel ID</label>
-                  <Input
-                    value={settings.facebook_pixel_id}
-                    onChange={(e) => setSettings((s) => ({ ...s, facebook_pixel_id: e.target.value }))}
-                    placeholder="123456789012345"
-                    className="rounded-xl"
-                  />
-                </div>
-                <Button onClick={saveSettings} disabled={savingSettings} className="gap-2 rounded-full">
-                  <Save className="h-4 w-4" />
-                  {savingSettings ? "Saving..." : "Save Settings"}
-                </Button>
-              </CardContent>
-            </Card>
+            <div className="space-y-6 max-w-lg">
+              <Card>
+                <CardHeader>
+                  <CardTitle className="font-sora">Site Settings</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div>
+                    <label className="text-sm font-medium text-foreground mb-1 block">HubSpot Calendar URL</label>
+                    <Input
+                      value={settings.hubspot_calendar_url}
+                      onChange={(e) => setSettings((s) => ({ ...s, hubspot_calendar_url: e.target.value }))}
+                      placeholder="https://meetings.hubspot.com/..."
+                      className="rounded-xl"
+                    />
+                  </div>
+                  <div>
+                    <label className="text-sm font-medium text-foreground mb-1 block">Facebook Pixel ID</label>
+                    <Input
+                      value={settings.facebook_pixel_id}
+                      onChange={(e) => setSettings((s) => ({ ...s, facebook_pixel_id: e.target.value }))}
+                      placeholder="123456789012345"
+                      className="rounded-xl"
+                    />
+                  </div>
+                </CardContent>
+              </Card>
+
+              <Card>
+                <CardHeader>
+                  <CardTitle className="font-sora flex items-center gap-2">
+                    <Mail className="h-5 w-5" />
+                    Email Notifications
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <p className="text-sm text-muted-foreground">
+                    Enter an email address to receive a notification whenever a new quiz form or SEO text request is submitted.
+                  </p>
+                  <div>
+                    <label className="text-sm font-medium text-foreground mb-1 block">Notification Email</label>
+                    <Input
+                      type="email"
+                      value={settings.notification_email}
+                      onChange={(e) => setSettings((s) => ({ ...s, notification_email: e.target.value }))}
+                      placeholder="admin@plutonic.dk"
+                      className="rounded-xl"
+                    />
+                  </div>
+                </CardContent>
+              </Card>
+
+              <Button onClick={saveSettings} disabled={savingSettings} className="gap-2 rounded-full">
+                <Save className="h-4 w-4" />
+                {savingSettings ? "Saving..." : "Save All Settings"}
+              </Button>
+            </div>
           </TabsContent>
         </Tabs>
       </main>
