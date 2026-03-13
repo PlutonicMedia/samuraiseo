@@ -4,7 +4,7 @@ import { translations, type Language, type TranslationKey } from "./translations
 interface LanguageContextType {
   language: Language;
   toggleLanguage: () => void;
-  t: (key: TranslationKey) => string | string[];
+  t: (key: TranslationKey) => string | readonly string[];
 }
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
