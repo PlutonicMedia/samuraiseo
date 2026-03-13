@@ -82,18 +82,21 @@ export type Database = {
           facebook_pixel_id: string | null
           hubspot_calendar_url: string | null
           id: number
+          notification_email: string | null
           updated_at: string
         }
         Insert: {
           facebook_pixel_id?: string | null
           hubspot_calendar_url?: string | null
           id?: number
+          notification_email?: string | null
           updated_at?: string
         }
         Update: {
           facebook_pixel_id?: string | null
           hubspot_calendar_url?: string | null
           id?: number
+          notification_email?: string | null
           updated_at?: string
         }
         Relationships: []
