@@ -105,11 +105,16 @@ const ResultsSection = ({ answers }: ResultsSectionProps) => {
 
   const handleSeoSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!seoUrl.trim()) return;
+    let url = seoUrl.trim();
+    if (!url) return;
+    // Auto-prepend https:// if no protocol
+    if (!/^https?:\/\//i.test(url)) {
+      url = "https://" + url;
+    }
     setSubmittingSeo(true);
     try {
       const { error } = await supabase.from("seo_text_requests").insert({
-        website_url: seoUrl.trim(),
+        website_url: url,
       });
       if (error) throw error;
       trackCustomEvent("SeoTextRequest", { url: seoUrl });
@@ -248,7 +253,7 @@ const ResultsSection = ({ answers }: ResultsSectionProps) => {
                 <p className="text-sm text-muted-foreground mb-4">{t("secondarySubtitle") as string}</p>
                 <form onSubmit={handleSeoSubmit} className="flex gap-2">
                   <Input
-                    type="url"
+                    type="text"
                     placeholder={t("secondaryPlaceholder") as string}
                     value={seoUrl}
                     onChange={(e) => setSeoUrl(e.target.value)}

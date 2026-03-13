@@ -20,15 +20,15 @@ export const TrustBannerPlaza = () => {
       transition={{ delay: 0.3, duration: 0.4 }}
       className="mt-4 bg-card rounded-xl border border-border/50 shadow-sm overflow-hidden"
     >
-      <div className="flex flex-col sm:flex-row items-center gap-4 p-4">
+      <div className="flex flex-col gap-4 p-4">
         <img
           src={trustPlaza}
           alt="Plaza Case Study"
-          className="w-20 h-auto rounded-lg shrink-0"
+          className="w-full max-w-md mx-auto rounded-lg"
           loading="lazy"
         />
-        <div className="flex-1 min-w-0">
-          <h4 className="font-sora font-semibold text-primary text-sm mb-2">
+        <div>
+          <h4 className="font-sora font-semibold text-primary text-sm mb-2 text-center">
             {t("trustPlazaTitle") as string}
           </h4>
           <div className="grid grid-cols-2 gap-1.5">
@@ -52,18 +52,18 @@ export const TrustBannerAwards = () => {
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.3, duration: 0.4 }}
-      className="mt-4 flex gap-3"
+      className="mt-4 flex flex-col gap-3 items-center"
     >
       <img
         src={trustReaktion}
         alt={t("trustAward1") as string}
-        className="flex-1 h-auto rounded-lg border border-border/50 shadow-sm object-cover"
+        className="w-full rounded-lg border border-border/50 shadow-sm object-cover"
         loading="lazy"
       />
       <img
         src={trustSearchAwards}
         alt={t("trustAward2") as string}
-        className="flex-1 h-auto rounded-lg border border-border/50 shadow-sm object-cover"
+        className="max-w-[200px] w-full rounded-lg border border-border/50 shadow-sm object-contain"
         loading="lazy"
       />
     </motion.div>
