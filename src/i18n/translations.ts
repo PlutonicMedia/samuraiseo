@@ -30,7 +30,8 @@ export const translations = {
     q2Label: "products",
 
     // Q3
-    q3Title: "How many products, blog posts, and collections do you expect to create in 2026?",
+    q3Title: "How many products do you expect to create on average per month in 2026?",
+    q3Label: "products/month",
     q3Placeholder: "Enter expected volume",
 
     // Q4
@@ -51,6 +52,8 @@ export const translations = {
     q6Title: "Do you currently have full control over your SEO and AI LLM Search Visibility?",
     q6Yes: "Yes",
     q6No: "No",
+    q6InfoTitle: "What does perfect SEO & AI visibility mean in 2026?",
+    q6InfoText: "It means fully optimized meta titles, descriptions, structured data (JSON-LD), AI-readable content, semantic HTML, internal linking, image alt texts, Open Graph tags, and crawlability for both Google and AI LLMs like ChatGPT, Perplexity, and Gemini — across every single product, collection, and blog post. For most stores, achieving this manually is nearly impossible at scale.",
 
     // Results
     resultsTitle: "Your Time-Saving Potential",
@@ -59,6 +62,13 @@ export const translations = {
     resultsSaved: "You could save",
     resultsHoursYear: "hours per year",
     resultsDesc: "by automating your Shopify SEO with Samurai & Plutonic Media.",
+    shareResult: "Share My Result",
+
+    // CTAs
+    fillFormCta: "Fill Out the Form",
+    bookMeetingCta: "Book a Meeting with a Specialist",
+    notReadyCta: "No thanks, I'm not ready yet",
+    hubspotPlaceholder: "HubSpot Calendar Embed — configure URL in admin settings",
 
     // Contact form
     contactTitle: "Get Started with Samurai",
@@ -114,7 +124,8 @@ export const translations = {
     q2Title: "Hvor mange produkter har du i dit katalog?",
     q2Label: "produkter",
 
-    q3Title: "Hvor mange produkter, blogindlæg og kollektioner forventer du at oprette i 2026?",
+    q3Title: "Hvor mange produkter forventer du at oprette i gennemsnit per måned i 2026?",
+    q3Label: "produkter/måned",
     q3Placeholder: "Indtast forventet antal",
 
     q4Title: "Hvor lang tid tager det dig at oprette og optimere hvert?",
@@ -132,6 +143,8 @@ export const translations = {
     q6Title: "Har du fuld kontrol over din SEO og AI LLM-søgesynlighed?",
     q6Yes: "Ja",
     q6No: "Nej",
+    q6InfoTitle: "Hvad betyder perfekt SEO & AI-synlighed i 2026?",
+    q6InfoText: "Det betyder fuldt optimerede metatitler, beskrivelser, strukturerede data (JSON-LD), AI-læsbart indhold, semantisk HTML, intern linkbuilding, billed-alt-tekster, Open Graph-tags og crawlbarhed for både Google og AI LLM'er som ChatGPT, Perplexity og Gemini — på tværs af hvert eneste produkt, kollektion og blogindlæg. For de fleste butikker er det næsten umuligt at opnå manuelt i stor skala.",
 
     resultsTitle: "Dit Tidsbesparende Potentiale",
     resultsManual: "Manuel optimering",
@@ -139,6 +152,12 @@ export const translations = {
     resultsSaved: "Du kan spare",
     resultsHoursYear: "timer om året",
     resultsDesc: "ved at automatisere din Shopify SEO med Samurai & Plutonic Media.",
+    shareResult: "Del Mit Resultat",
+
+    fillFormCta: "Udfyld Formularen",
+    bookMeetingCta: "Book et Møde med en Specialist",
+    notReadyCta: "Nej tak, jeg er ikke klar endnu",
+    hubspotPlaceholder: "HubSpot Kalender Embed — konfigurer URL i admin-indstillinger",
 
     contactTitle: "Kom i Gang med Samurai",
     contactSubtitle: "Efterlad dine oplysninger, så kontakter vi dig for en demo.",
