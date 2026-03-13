@@ -253,7 +253,7 @@ const ResultsSection = ({ answers }: ResultsSectionProps) => {
                 <p className="text-sm text-muted-foreground mb-4">{t("secondarySubtitle") as string}</p>
                 <form onSubmit={handleSeoSubmit} className="flex gap-2">
                   <Input
-                    type="url"
+                    type="text"
                     placeholder={t("secondaryPlaceholder") as string}
                     value={seoUrl}
                     onChange={(e) => setSeoUrl(e.target.value)}
