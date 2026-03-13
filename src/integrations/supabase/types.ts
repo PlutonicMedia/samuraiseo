@@ -14,16 +14,123 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      quiz_submissions: {
+        Row: {
+          company: string
+          created_at: string
+          email: string
+          expected_volume: number | null
+          has_seo_control: boolean | null
+          id: string
+          name: string
+          phone: string
+          product_count: number | null
+          revenue_range: string | null
+          saved_hours: number | null
+          time_per_item: number | null
+        }
+        Insert: {
+          company: string
+          created_at?: string
+          email: string
+          expected_volume?: number | null
+          has_seo_control?: boolean | null
+          id?: string
+          name: string
+          phone: string
+          product_count?: number | null
+          revenue_range?: string | null
+          saved_hours?: number | null
+          time_per_item?: number | null
+        }
+        Update: {
+          company?: string
+          created_at?: string
+          email?: string
+          expected_volume?: number | null
+          has_seo_control?: boolean | null
+          id?: string
+          name?: string
+          phone?: string
+          product_count?: number | null
+          revenue_range?: string | null
+          saved_hours?: number | null
+          time_per_item?: number | null
+        }
+        Relationships: []
+      }
+      seo_text_requests: {
+        Row: {
+          created_at: string
+          id: string
+          website_url: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          website_url: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          website_url?: string
+        }
+        Relationships: []
+      }
+      site_settings: {
+        Row: {
+          facebook_pixel_id: string | null
+          hubspot_calendar_url: string | null
+          id: number
+          updated_at: string
+        }
+        Insert: {
+          facebook_pixel_id?: string | null
+          hubspot_calendar_url?: string | null
+          id?: number
+          updated_at?: string
+        }
+        Update: {
+          facebook_pixel_id?: string | null
+          hubspot_calendar_url?: string | null
+          id?: number
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      user_roles: {
+        Row: {
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "admin" | "user"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +257,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["admin", "user"],
+    },
   },
 } as const
