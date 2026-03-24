@@ -9,7 +9,7 @@ export const translations = {
     // Hero
     heroTitle: "Could you imagine optimizing your entire Shopify store at once?",
     heroSubtitle: "100% SEO-optimization for all your collections, products, and blog posts — powered by AI.",
-    heroCta: "Start the Quiz",
+    heroCta: "See how much time you could save",
 
     // Quiz
     progressLabel: "Question",
@@ -107,7 +107,7 @@ export const translations = {
 
     heroTitle: "Forestil dig at optimere hele din Shopify-butik på én gang?",
     heroSubtitle: "100% SEO-optimering af alle dine kollektioner, produkter og blogindlæg — drevet af AI.",
-    heroCta: "Start Quizzen",
+    heroCta: "Se hvor meget tid du kan spare",
 
     progressLabel: "Spørgsmål",
     of: "af",
