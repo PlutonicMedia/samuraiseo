@@ -62,16 +62,19 @@ export type Database = {
       seo_text_requests: {
         Row: {
           created_at: string
+          email: string | null
           id: string
           website_url: string
         }
         Insert: {
           created_at?: string
+          email?: string | null
           id?: string
           website_url: string
         }
         Update: {
           created_at?: string
+          email?: string | null
           id?: string
           website_url?: string
         }
