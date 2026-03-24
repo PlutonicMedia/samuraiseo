@@ -56,12 +56,12 @@ export const translations = {
     painCard2Mid: "existing products that would take",
     painCard2Post: "hours to manually optimize for SEO, CRO, GEO, etc.",
     samuraiPitch: "With Samurai, product creation, product optimization and even collection optimization is automated.",
-    plazaCaseHeading: "Our client and leading E-Commerce jewellery store in Denmark saved:",
+    plazaCaseHeading: "Our client and leading E-Commerce jewellery store PLAZA saved:",
     plazaStat1: "66 hours monthly on new product creation",
     plazaStat2: "32 hours monthly on product/collection optimization",
-    plazaTrafficStat: "They also grew their organic traffic with +135%.",
+    plazaTrafficStat: "They also grew their organic traffic with +135% and grew profit with +306% YoY.",
     plazaQuote: "Samurai saves me and my team countless hours each month without compromising quality. It is freeing up so much time that is now being spent on strategy.",
-    plazaQuoteAuthor: "– CEO, PLAZA",
+    plazaQuoteAuthor: "Aske Frederiksen - CEO, PLAZA",
     wantToKnowCta: "Want to know how we did it?",
 
     // Results — Solution page
@@ -70,11 +70,26 @@ export const translations = {
     solutionPoint2: "We automate optimization of collections with 2026-ready meta data, text, FAQ, schema markup, internal links, etc.",
     solutionPoint3: "The PLAZA case won us the Reaktion 2025 case competition and we were a finalist at European Search Awards (for scaling SEO exponentially and profitable).",
 
+    // Feature cards
+    featureCard1Title: "Shopify Integration",
+    featureCard1Desc: "Collect and optimize any product — new or existing.",
+    featureCard2Title: "2026-Ready Automation",
+    featureCard2Desc: "Metadata, text, FAQ, schema, and internal links.",
+    featureCard3Title: "Award-Winning Growth",
+    featureCard3Desc: "Winner of Reaktion 2025 and European Search Awards finalist.",
+
     // CTAs
     fillFormCta: "Fill Out the Form",
     bookMeetingCta: "Book a Meeting with a Specialist",
     notReadyCta: "No thanks, I'm not ready yet",
     hubspotPlaceholder: "HubSpot Calendar Embed — configure URL in admin settings",
+
+    // Specialist booking
+    specialistHeading: "Choose your specialist",
+    specialistKasper: "Kasper",
+    specialistPeter: "Peter",
+    specialistOliver: "Oliver",
+    specialistBook: "Book with",
 
     // Contact form
     contactTitle: "Get Started with Samurai",
@@ -158,12 +173,12 @@ export const translations = {
     painCard2Mid: "eksisterende produkter, der ville tage",
     painCard2Post: "timer at optimere manuelt for SEO, CRO, GEO osv.",
     samuraiPitch: "Med Samurai automatiseres produktoprettelse, produktoptimering og endda kollektionsoptimering.",
-    plazaCaseHeading: "Vores kunde og førende e-commerce smykkebutik i Danmark sparede:",
+    plazaCaseHeading: "Vores kunde og førende e-commerce smykkebutik PLAZA sparede:",
     plazaStat1: "66 timer månedligt på ny produktoprettelse",
     plazaStat2: "32 timer månedligt på produkt-/kollektionsoptimering",
-    plazaTrafficStat: "De øgede også deres organiske trafik med +135%.",
+    plazaTrafficStat: "De øgede også deres organiske trafik med +135% og øgede profit med +306% ÅoÅ.",
     plazaQuote: "Samurai sparer mig og mit team utallige timer hver måned uden at gå på kompromis med kvaliteten. Det frigør så meget tid, som nu bruges på strategi.",
-    plazaQuoteAuthor: "– CEO, PLAZA",
+    plazaQuoteAuthor: "Aske Frederiksen - CEO, PLAZA",
     wantToKnowCta: "Vil du vide, hvordan vi gjorde det?",
 
     // Results — Solution page
@@ -172,10 +187,25 @@ export const translations = {
     solutionPoint2: "Vi automatiserer optimering af kollektioner med 2026-klar metadata, tekst, FAQ, schema markup, interne links osv.",
     solutionPoint3: "PLAZA-casen vandt os Reaktion 2025 case-konkurrencen, og vi var finalist ved European Search Awards (for at skalere SEO eksponentielt og profitabelt).",
 
+    // Feature cards
+    featureCard1Title: "Shopify Integration",
+    featureCard1Desc: "Indsaml og optimer ethvert produkt — nyt eller eksisterende.",
+    featureCard2Title: "2026-Klar Automatisering",
+    featureCard2Desc: "Metadata, tekst, FAQ, schema og interne links.",
+    featureCard3Title: "Prisvindende Vækst",
+    featureCard3Desc: "Vinder af Reaktion 2025 og European Search Awards finalist.",
+
     fillFormCta: "Udfyld Formularen",
     bookMeetingCta: "Book et Møde med en Specialist",
     notReadyCta: "Nej tak, jeg er ikke klar endnu",
     hubspotPlaceholder: "HubSpot Kalender Embed — konfigurer URL i admin-indstillinger",
+
+    // Specialist booking
+    specialistHeading: "Vælg din specialist",
+    specialistKasper: "Kasper",
+    specialistPeter: "Peter",
+    specialistOliver: "Oliver",
+    specialistBook: "Book med",
 
     contactTitle: "Kom i Gang med Samurai",
     contactSubtitle: "Efterlad dine oplysninger, så kontakter vi dig for en demo.",
