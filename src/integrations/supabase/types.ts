@@ -84,6 +84,9 @@ export type Database = {
         Row: {
           facebook_pixel_id: string | null
           hubspot_calendar_url: string | null
+          hubspot_url_kasper: string | null
+          hubspot_url_oliver: string | null
+          hubspot_url_peter: string | null
           id: number
           notification_email: string | null
           updated_at: string
@@ -91,6 +94,9 @@ export type Database = {
         Insert: {
           facebook_pixel_id?: string | null
           hubspot_calendar_url?: string | null
+          hubspot_url_kasper?: string | null
+          hubspot_url_oliver?: string | null
+          hubspot_url_peter?: string | null
           id?: number
           notification_email?: string | null
           updated_at?: string
@@ -98,6 +104,9 @@ export type Database = {
         Update: {
           facebook_pixel_id?: string | null
           hubspot_calendar_url?: string | null
+          hubspot_url_kasper?: string | null
+          hubspot_url_oliver?: string | null
+          hubspot_url_peter?: string | null
           id?: number
           notification_email?: string | null
           updated_at?: string
