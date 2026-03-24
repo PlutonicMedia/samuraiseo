@@ -4,15 +4,13 @@ import { useLanguage } from "@/i18n/LanguageContext";
 import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider";
 import { Input } from "@/components/ui/input";
-import { Switch } from "@/components/ui/switch";
 import { Progress } from "@/components/ui/progress";
 import { Card, CardContent } from "@/components/ui/card";
-import { ArrowRight, ArrowLeft, ExternalLink, Info } from "lucide-react";
+import { ArrowRight, ArrowLeft, ExternalLink } from "lucide-react";
 import ResultsSection from "./ResultsSection";
-import { TrustBannerPlaza, TrustBannerAwards } from "./TrustBanners";
 import { trackCustomEvent } from "@/lib/facebook-pixel";
 
-const TOTAL_STEPS = 6;
+const TOTAL_STEPS = 5;
 
 interface QuizAnswers {
   usesShopify: boolean | null;
@@ -20,7 +18,6 @@ interface QuizAnswers {
   expectedVolume: number;
   timePerItem: number;
   revenueRange: string;
-  hasSeoControl: boolean;
 }
 
 const QuizFlow = () => {
@@ -32,7 +29,6 @@ const QuizFlow = () => {
     expectedVolume: 50,
     timePerItem: 30,
     revenueRange: "",
-    hasSeoControl: false,
   });
 
   const startQuiz = () => {
@@ -43,7 +39,7 @@ const QuizFlow = () => {
   const nextStep = () => {
     if (step === TOTAL_STEPS) {
       trackCustomEvent("QuizComplete", { answers });
-      setStep(7);
+      setStep(6);
     } else {
       setStep((s) => s + 1);
     }
@@ -89,7 +85,7 @@ const QuizFlow = () => {
   }
 
   // Results
-  if (step === 7) {
+  if (step === 6) {
     return <ResultsSection answers={answers} />;
   }
 
@@ -156,7 +152,7 @@ const QuizFlow = () => {
                 </div>
               )}
 
-              {/* Step 2: Product count — slider + synced input */}
+              {/* Step 2: Product count */}
               {step === 2 && (
                 <div className="space-y-6">
                   <h2 className="font-sora text-xl font-bold text-primary">{t("q2Title") as string}</h2>
@@ -187,7 +183,7 @@ const QuizFlow = () => {
                 </div>
               )}
 
-              {/* Step 3: Expected volume per month — slider + synced input */}
+              {/* Step 3: Expected volume per month */}
               {step === 3 && (
                 <div className="space-y-6">
                   <h2 className="font-sora text-xl font-bold text-primary">{t("q3Title") as string}</h2>
@@ -218,7 +214,7 @@ const QuizFlow = () => {
                 </div>
               )}
 
-              {/* Step 4: Time per item slider */}
+              {/* Step 4: Time per item */}
               {step === 4 && (
                 <div className="space-y-6">
                   <h2 className="font-sora text-xl font-bold text-primary">{t("q4Title") as string}</h2>
@@ -257,42 +253,8 @@ const QuizFlow = () => {
                   </div>
                 </div>
               )}
-
-              {/* Step 6: SEO control toggle + info box */}
-              {step === 6 && (
-                <div className="space-y-6">
-                  <h2 className="font-sora text-xl font-bold text-primary">{t("q6Title") as string}</h2>
-                  <div className="flex items-center justify-center gap-6 py-6">
-                    <span className={`text-lg font-medium ${!answers.hasSeoControl ? "text-primary" : "text-muted-foreground"}`}>
-                      {t("q6No") as string}
-                    </span>
-                    <Switch
-                      checked={answers.hasSeoControl}
-                      onCheckedChange={(v) => setAnswers((a) => ({ ...a, hasSeoControl: v }))}
-                      className="scale-150"
-                    />
-                    <span className={`text-lg font-medium ${answers.hasSeoControl ? "text-primary" : "text-muted-foreground"}`}>
-                      {t("q6Yes") as string}
-                    </span>
-                  </div>
-                  {/* Info box */}
-                  <div className="bg-accent/10 border border-accent/30 rounded-xl p-4 space-y-2">
-                    <div className="flex items-center gap-2">
-                      <Info className="h-4 w-4 text-accent shrink-0" />
-                      <h4 className="font-sora font-semibold text-primary text-sm">{t("q6InfoTitle") as string}</h4>
-                    </div>
-                    <p className="text-xs text-muted-foreground leading-relaxed">
-                      {t("q6InfoText") as string}
-                    </p>
-                  </div>
-                </div>
-              )}
             </CardContent>
           </Card>
-
-          {/* Dynamic trust banners */}
-          {step === 5 && <TrustBannerPlaza />}
-          {step === 6 && <TrustBannerAwards />}
         </motion.div>
       </AnimatePresence>
 

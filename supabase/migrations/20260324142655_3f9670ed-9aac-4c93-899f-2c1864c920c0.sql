@@ -1,0 +1,1 @@
+ALTER TABLE public.seo_text_requests ADD COLUMN email text;
