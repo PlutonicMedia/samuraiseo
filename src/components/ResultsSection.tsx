@@ -11,8 +11,12 @@ import { trackCustomEvent } from "@/lib/facebook-pixel";
 import { toast } from "sonner";
 import { Clock, Package, ArrowRight, Send, CalendarDays, FileText, X, Globe, Quote, Workflow, Zap, Trophy } from "lucide-react";
 import { z } from "zod";
-import reaktionBadge from "@/assets/trust-reaktion.png";
-import searchAwardsBadge from "@/assets/trust-search-awards.png";
+import reaktionBadge from "@/assets/reaktion-winner.png";
+import searchAwardsBadge from "@/assets/european-search-awards.png";
+import askeImg from "@/assets/aske-frederiksen.jpg";
+import kasperImg from "@/assets/kasper-plutonic.jpg";
+import peterImg from "@/assets/peter-plutonic.png";
+import oliverImg from "@/assets/oliver-plutonic.png";
 
 interface ResultsSectionProps {
   answers: {
@@ -62,12 +66,13 @@ interface Specialist {
   nameKey: string;
   urlField: string;
   initials: string;
+  img: string;
 }
 
 const specialists: Specialist[] = [
-  { key: "kasper", nameKey: "specialistKasper", urlField: "hubspot_url_kasper", initials: "K" },
-  { key: "peter", nameKey: "specialistPeter", urlField: "hubspot_url_peter", initials: "P" },
-  { key: "oliver", nameKey: "specialistOliver", urlField: "hubspot_url_oliver", initials: "O" },
+  { key: "kasper", nameKey: "specialistKasper", urlField: "hubspot_url_kasper", initials: "K", img: kasperImg },
+  { key: "peter", nameKey: "specialistPeter", urlField: "hubspot_url_peter", initials: "P", img: peterImg },
+  { key: "oliver", nameKey: "specialistOliver", urlField: "hubspot_url_oliver", initials: "O", img: oliverImg },
 ];
 
 const ResultsSection = ({ answers }: ResultsSectionProps) => {
@@ -273,7 +278,7 @@ const ResultsSection = ({ answers }: ResultsSectionProps) => {
                   </p>
                   <div className="bg-background/60 rounded-xl p-4 border border-border/30 flex gap-4 items-start">
                     <Avatar className="h-12 w-12 shrink-0 mt-1">
-                      <AvatarImage src="/aske-frederiksen.jpg" alt="Aske Frederiksen" />
+                      <AvatarImage src={askeImg} alt="Aske Frederiksen" />
                       <AvatarFallback className="bg-primary/10 text-primary font-bold">AF</AvatarFallback>
                     </Avatar>
                     <div>
@@ -427,7 +432,7 @@ const ResultsSection = ({ answers }: ResultsSectionProps) => {
                               className="flex flex-col items-center gap-2 p-4 rounded-xl border border-border/50 hover:border-primary/40 hover:bg-primary/5 transition-all group"
                             >
                               <Avatar className="h-16 w-16 md:h-20 md:w-20">
-                                <AvatarImage src={`/${spec.key}-plutonic.jpg`} alt={t(spec.nameKey as any) as string} />
+                                <AvatarImage src={spec.img} alt={t(spec.nameKey as any) as string} />
                                 <AvatarFallback className="bg-primary/10 text-primary font-bold text-lg">{spec.initials}</AvatarFallback>
                               </Avatar>
                               <span className="font-sora text-sm font-semibold text-foreground group-hover:text-primary transition-colors">
