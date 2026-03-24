@@ -4,12 +4,15 @@ import { useLanguage } from "@/i18n/LanguageContext";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { supabase } from "@/integrations/supabase/client";
 import { useNavigate } from "react-router-dom";
 import { trackCustomEvent } from "@/lib/facebook-pixel";
 import { toast } from "sonner";
-import { Clock, Package, ArrowRight, Send, CalendarDays, FileText, X, Globe, Quote } from "lucide-react";
+import { Clock, Package, ArrowRight, Send, CalendarDays, FileText, X, Globe, Quote, Workflow, Zap, Trophy } from "lucide-react";
 import { z } from "zod";
+import reaktionBadge from "@/assets/trust-reaktion.png";
+import searchAwardsBadge from "@/assets/trust-search-awards.png";
 
 interface ResultsSectionProps {
   answers: {
@@ -27,7 +30,6 @@ const contactSchema = z.object({
   company: z.string().trim().min(1).max(200),
 });
 
-// Animated counter hook
 function useAnimatedCounter(target: number, duration = 1500) {
   const [value, setValue] = useState(0);
   const ref = useRef<number>();
@@ -37,7 +39,6 @@ function useAnimatedCounter(target: number, duration = 1500) {
     const animate = (now: number) => {
       const elapsed = now - start;
       const progress = Math.min(elapsed / duration, 1);
-      // ease out cubic
       const eased = 1 - Math.pow(1 - progress, 3);
       setValue(Math.round(eased * target));
       if (progress < 1) {
@@ -56,6 +57,19 @@ function useAnimatedCounter(target: number, duration = 1500) {
 type ResultPage = "pain" | "solution";
 type CTAState = "idle" | "form" | "meeting" | "declined";
 
+interface Specialist {
+  key: string;
+  nameKey: string;
+  urlField: string;
+  initials: string;
+}
+
+const specialists: Specialist[] = [
+  { key: "kasper", nameKey: "specialistKasper", urlField: "hubspot_url_kasper", initials: "K" },
+  { key: "peter", nameKey: "specialistPeter", urlField: "hubspot_url_peter", initials: "P" },
+  { key: "oliver", nameKey: "specialistOliver", urlField: "hubspot_url_oliver", initials: "O" },
+];
+
 const ResultsSection = ({ answers }: ResultsSectionProps) => {
   const { t } = useLanguage();
   const navigate = useNavigate();
@@ -66,9 +80,9 @@ const ResultsSection = ({ answers }: ResultsSectionProps) => {
   const [seoEmail, setSeoEmail] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [submittingSeo, setSubmittingSeo] = useState(false);
-  const [hubspotUrl, setHubspotUrl] = useState<string | null>(null);
+  const [specialistUrls, setSpecialistUrls] = useState<Record<string, string>>({});
+  const [selectedSpecialist, setSelectedSpecialist] = useState<string | null>(null);
 
-  // Calculations
   const userMonthlyHours = Math.round((answers.expectedVolume * answers.timePerItem) / 60);
   const userTotalOptimizationHours = Math.round((answers.productCount * answers.timePerItem) / 60);
 
@@ -79,13 +93,21 @@ const ResultsSection = ({ answers }: ResultsSectionProps) => {
   useEffect(() => {
     supabase
       .from("site_settings")
-      .select("hubspot_calendar_url")
+      .select("hubspot_calendar_url, hubspot_url_kasper, hubspot_url_peter, hubspot_url_oliver")
       .eq("id", 1)
       .single()
       .then(({ data }) => {
-        if (data?.hubspot_calendar_url) setHubspotUrl(data.hubspot_calendar_url);
+        if (data) {
+          setSpecialistUrls({
+            kasper: (data as any).hubspot_url_kasper || "",
+            peter: (data as any).hubspot_url_peter || "",
+            oliver: (data as any).hubspot_url_oliver || "",
+          });
+        }
       });
   }, []);
+
+  const activeHubspotUrl = selectedSpecialist ? specialistUrls[selectedSpecialist] : null;
 
   const handleContactSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -122,15 +144,10 @@ const ResultsSection = ({ answers }: ResultsSectionProps) => {
     let url = seoUrl.trim();
     const email = seoEmail.trim();
     if (!url || !email) return;
-    if (!/^https?:\/\//i.test(url)) {
-      url = "https://" + url;
-    }
+    if (!/^https?:\/\//i.test(url)) url = "https://" + url;
     setSubmittingSeo(true);
     try {
-      const { error } = await supabase.from("seo_text_requests").insert({
-        website_url: url,
-        email,
-      });
+      const { error } = await supabase.from("seo_text_requests").insert({ website_url: url, email });
       if (error) throw error;
       trackCustomEvent("SeoTextRequest", { url, email });
       navigate("/thank-you");
@@ -140,6 +157,12 @@ const ResultsSection = ({ answers }: ResultsSectionProps) => {
       setSubmittingSeo(false);
     }
   };
+
+  const featureCards = [
+    { icon: Workflow, titleKey: "featureCard1Title" as const, descKey: "featureCard1Desc" as const, color: "bg-primary/10 text-primary" },
+    { icon: Zap, titleKey: "featureCard2Title" as const, descKey: "featureCard2Desc" as const, color: "bg-accent/15 text-accent" },
+    { icon: Trophy, titleKey: "featureCard3Title" as const, descKey: "featureCard3Desc" as const, color: "bg-primary/10 text-primary" },
+  ];
 
   return (
     <motion.div
@@ -159,7 +182,6 @@ const ResultsSection = ({ answers }: ResultsSectionProps) => {
             transition={{ duration: 0.4 }}
             className="space-y-6"
           >
-            {/* Heading */}
             <motion.h2
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -214,11 +236,7 @@ const ResultsSection = ({ answers }: ResultsSectionProps) => {
             </motion.p>
 
             {/* Plaza case section */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.6 }}
-            >
+            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.6 }}>
               <Card className="border-border/50 shadow-sm bg-secondary/30">
                 <CardContent className="pt-6 pb-6 space-y-4">
                   <h3 className="font-sora text-base font-bold text-primary">
@@ -237,14 +255,20 @@ const ResultsSection = ({ answers }: ResultsSectionProps) => {
                   <p className="text-sm font-semibold text-primary">
                     {t("plazaTrafficStat") as string}
                   </p>
-                  <div className="bg-background/60 rounded-xl p-4 border border-border/30">
-                    <Quote className="h-4 w-4 text-muted-foreground mb-2" />
-                    <p className="text-sm italic text-muted-foreground leading-relaxed">
-                      {t("plazaQuote") as string}
-                    </p>
-                    <p className="text-xs font-semibold text-primary mt-2">
-                      {t("plazaQuoteAuthor") as string}
-                    </p>
+                  <div className="bg-background/60 rounded-xl p-4 border border-border/30 flex gap-4 items-start">
+                    <Avatar className="h-12 w-12 shrink-0 mt-1">
+                      <AvatarImage src="/aske-frederiksen.jpg" alt="Aske Frederiksen" />
+                      <AvatarFallback className="bg-primary/10 text-primary font-bold">AF</AvatarFallback>
+                    </Avatar>
+                    <div>
+                      <Quote className="h-4 w-4 text-muted-foreground mb-2" />
+                      <p className="text-sm italic text-muted-foreground leading-relaxed">
+                        {t("plazaQuote") as string}
+                      </p>
+                      <p className="text-xs font-semibold text-primary mt-2">
+                        {t("plazaQuoteAuthor") as string}
+                      </p>
+                    </div>
                   </div>
                 </CardContent>
               </Card>
@@ -281,24 +305,44 @@ const ResultsSection = ({ answers }: ResultsSectionProps) => {
               {t("solutionTitle") as string}
             </motion.h2>
 
-            <Card className="border-border/50 shadow-md">
-              <CardContent className="pt-6 pb-6 space-y-4">
-                <ul className="space-y-3 text-sm text-foreground">
-                  <li className="flex items-start gap-2">
-                    <span className="h-1.5 w-1.5 rounded-full bg-primary mt-2 shrink-0" />
-                    {t("solutionPoint1") as string}
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="h-1.5 w-1.5 rounded-full bg-primary mt-2 shrink-0" />
-                    {t("solutionPoint2") as string}
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="h-1.5 w-1.5 rounded-full bg-primary mt-2 shrink-0" />
-                    {t("solutionPoint3") as string}
-                  </li>
-                </ul>
-              </CardContent>
-            </Card>
+            {/* Feature Cards */}
+            <div className="grid gap-4">
+              {featureCards.map((card, i) => (
+                <motion.div
+                  key={card.titleKey}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.1 + i * 0.12 }}
+                >
+                  <Card className="border-border/50 shadow-md hover:shadow-lg transition-shadow">
+                    <CardContent className="pt-5 pb-5 flex items-start gap-4">
+                      <div className={`${card.color} rounded-xl p-3 shrink-0`}>
+                        <card.icon className="h-6 w-6" />
+                      </div>
+                      <div>
+                        <h3 className="font-sora text-sm font-bold text-foreground mb-1">
+                          {t(card.titleKey) as string}
+                        </h3>
+                        <p className="text-sm text-muted-foreground leading-relaxed">
+                          {t(card.descKey) as string}
+                        </p>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </motion.div>
+              ))}
+            </div>
+
+            {/* Trust bar with award images */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.5 }}
+              className="flex items-center justify-center gap-6 py-4"
+            >
+              <img src={reaktionBadge} alt="Reaktion Case Competition Winner" className="h-14 md:h-16 w-auto object-contain" />
+              <img src={searchAwardsBadge} alt="European Search Awards 2025 Finalist" className="h-14 md:h-16 w-auto object-contain" />
+            </motion.div>
 
             {/* CTA buttons */}
             {ctaState === "idle" && (
@@ -351,26 +395,63 @@ const ResultsSection = ({ answers }: ResultsSectionProps) => {
               )}
             </AnimatePresence>
 
-            {/* Meeting */}
+            {/* Specialist booking */}
             <AnimatePresence>
               {ctaState === "meeting" && (
-                <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}>
-                  <Card className="border-border/50 shadow-md">
-                    <CardContent className="pt-6 pb-8">
-                      <h3 className="font-sora text-lg font-bold text-primary mb-4">{t("bookMeetingCta") as string}</h3>
-                      {hubspotUrl ? (
-                        <iframe
-                          src={hubspotUrl}
-                          className="w-full min-h-[500px] rounded-xl border-0"
-                          title="Book a meeting"
-                        />
-                      ) : (
-                        <div className="w-full min-h-[300px] rounded-xl border-2 border-dashed border-border flex items-center justify-center text-muted-foreground text-sm">
-                          {t("hubspotPlaceholder") as string}
+                <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} className="space-y-4">
+                  {!selectedSpecialist && (
+                    <Card className="border-border/50 shadow-md">
+                      <CardContent className="pt-6 pb-6">
+                        <h3 className="font-sora text-lg font-bold text-primary mb-4">{t("specialistHeading") as string}</h3>
+                        <div className="grid grid-cols-3 gap-3">
+                          {specialists.map((spec) => (
+                            <button
+                              key={spec.key}
+                              onClick={() => setSelectedSpecialist(spec.key)}
+                              className="flex flex-col items-center gap-2 p-4 rounded-xl border border-border/50 hover:border-primary/40 hover:bg-primary/5 transition-all group"
+                            >
+                              <Avatar className="h-16 w-16 md:h-20 md:w-20">
+                                <AvatarImage src={`/${spec.key}-plutonic.jpg`} alt={t(spec.nameKey as any) as string} />
+                                <AvatarFallback className="bg-primary/10 text-primary font-bold text-lg">{spec.initials}</AvatarFallback>
+                              </Avatar>
+                              <span className="font-sora text-sm font-semibold text-foreground group-hover:text-primary transition-colors">
+                                {t(spec.nameKey as any) as string}
+                              </span>
+                              <span className="text-xs text-muted-foreground">
+                                {t("specialistBook") as string}
+                              </span>
+                            </button>
+                          ))}
                         </div>
-                      )}
-                    </CardContent>
-                  </Card>
+                      </CardContent>
+                    </Card>
+                  )}
+
+                  {selectedSpecialist && (
+                    <Card className="border-border/50 shadow-md">
+                      <CardContent className="pt-6 pb-8">
+                        <div className="flex items-center justify-between mb-4">
+                          <h3 className="font-sora text-lg font-bold text-primary">
+                            {t("specialistBook") as string} {t(specialists.find(s => s.key === selectedSpecialist)?.nameKey as any) as string}
+                          </h3>
+                          <Button variant="ghost" size="sm" onClick={() => setSelectedSpecialist(null)} className="text-muted-foreground">
+                            <X className="h-4 w-4" />
+                          </Button>
+                        </div>
+                        {activeHubspotUrl ? (
+                          <iframe
+                            src={activeHubspotUrl}
+                            className="w-full min-h-[500px] rounded-xl border-0"
+                            title="Book a meeting"
+                          />
+                        ) : (
+                          <div className="w-full min-h-[300px] rounded-xl border-2 border-dashed border-border flex items-center justify-center text-muted-foreground text-sm">
+                            {t("hubspotPlaceholder") as string}
+                          </div>
+                        )}
+                      </CardContent>
+                    </Card>
+                  )}
                 </motion.div>
               )}
             </AnimatePresence>
@@ -415,7 +496,7 @@ const ResultsSection = ({ answers }: ResultsSectionProps) => {
             {/* Back to CTAs */}
             {ctaState !== "idle" && (
               <button
-                onClick={() => setCTAState("idle")}
+                onClick={() => { setCTAState("idle"); setSelectedSpecialist(null); }}
                 className="w-full text-center text-sm text-muted-foreground hover:text-primary transition-colors py-2 flex items-center justify-center gap-1"
               >
                 <X className="h-3 w-3" />

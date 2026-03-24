@@ -15,7 +15,14 @@ const Admin = () => {
   const [user, setUser] = useState<any>(null);
   const [submissions, setSubmissions] = useState<any[]>([]);
   const [seoRequests, setSeoRequests] = useState<any[]>([]);
-  const [settings, setSettings] = useState({ hubspot_calendar_url: "", facebook_pixel_id: "", notification_email: "" });
+  const [settings, setSettings] = useState({
+    hubspot_calendar_url: "",
+    facebook_pixel_id: "",
+    notification_email: "",
+    hubspot_url_kasper: "",
+    hubspot_url_peter: "",
+    hubspot_url_oliver: "",
+  });
   const [savingSettings, setSavingSettings] = useState(false);
 
   useEffect(() => {
@@ -45,16 +52,20 @@ const Admin = () => {
       console.error("Quiz submissions fetch error:", subRes.error);
       toast.error("Could not load form entries. Check admin role permissions.");
     }
-    if (seoRes.error) {
-      console.error("SEO requests fetch error:", seoRes.error);
-    }
+    if (seoRes.error) console.error("SEO requests fetch error:", seoRes.error);
     if (subRes.data) setSubmissions(subRes.data);
     if (seoRes.data) setSeoRequests(seoRes.data);
-    if (settingsRes.data) setSettings({
-      hubspot_calendar_url: settingsRes.data.hubspot_calendar_url || "",
-      facebook_pixel_id: settingsRes.data.facebook_pixel_id || "",
-      notification_email: (settingsRes.data as any).notification_email || "",
-    });
+    if (settingsRes.data) {
+      const d = settingsRes.data as any;
+      setSettings({
+        hubspot_calendar_url: d.hubspot_calendar_url || "",
+        facebook_pixel_id: d.facebook_pixel_id || "",
+        notification_email: d.notification_email || "",
+        hubspot_url_kasper: d.hubspot_url_kasper || "",
+        hubspot_url_peter: d.hubspot_url_peter || "",
+        hubspot_url_oliver: d.hubspot_url_oliver || "",
+      });
+    }
   };
 
   const saveSettings = async () => {
@@ -151,6 +162,7 @@ const Admin = () => {
                     <TableRow>
                       <TableHead>Date</TableHead>
                       <TableHead>Website URL</TableHead>
+                      <TableHead>Email</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
@@ -162,10 +174,11 @@ const Admin = () => {
                             {r.website_url}
                           </a>
                         </TableCell>
+                        <TableCell>{r.email || "—"}</TableCell>
                       </TableRow>
                     ))}
                     {seoRequests.length === 0 && (
-                      <TableRow><TableCell colSpan={2} className="text-center text-muted-foreground">No requests yet</TableCell></TableRow>
+                      <TableRow><TableCell colSpan={3} className="text-center text-muted-foreground">No requests yet</TableCell></TableRow>
                     )}
                   </TableBody>
                 </Table>
@@ -181,20 +194,46 @@ const Admin = () => {
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div>
-                    <label className="text-sm font-medium text-foreground mb-1 block">HubSpot Calendar URL</label>
-                    <Input
-                      value={settings.hubspot_calendar_url}
-                      onChange={(e) => setSettings((s) => ({ ...s, hubspot_calendar_url: e.target.value }))}
-                      placeholder="https://meetings.hubspot.com/..."
-                      className="rounded-xl"
-                    />
-                  </div>
-                  <div>
                     <label className="text-sm font-medium text-foreground mb-1 block">Facebook Pixel ID</label>
                     <Input
                       value={settings.facebook_pixel_id}
                       onChange={(e) => setSettings((s) => ({ ...s, facebook_pixel_id: e.target.value }))}
                       placeholder="123456789012345"
+                      className="rounded-xl"
+                    />
+                  </div>
+                </CardContent>
+              </Card>
+
+              <Card>
+                <CardHeader>
+                  <CardTitle className="font-sora">Specialist Calendar URLs</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div>
+                    <label className="text-sm font-medium text-foreground mb-1 block">Kasper — HubSpot Calendar URL</label>
+                    <Input
+                      value={settings.hubspot_url_kasper}
+                      onChange={(e) => setSettings((s) => ({ ...s, hubspot_url_kasper: e.target.value }))}
+                      placeholder="https://meetings.hubspot.com/kasper..."
+                      className="rounded-xl"
+                    />
+                  </div>
+                  <div>
+                    <label className="text-sm font-medium text-foreground mb-1 block">Peter — HubSpot Calendar URL</label>
+                    <Input
+                      value={settings.hubspot_url_peter}
+                      onChange={(e) => setSettings((s) => ({ ...s, hubspot_url_peter: e.target.value }))}
+                      placeholder="https://meetings.hubspot.com/peter..."
+                      className="rounded-xl"
+                    />
+                  </div>
+                  <div>
+                    <label className="text-sm font-medium text-foreground mb-1 block">Oliver — HubSpot Calendar URL</label>
+                    <Input
+                      value={settings.hubspot_url_oliver}
+                      onChange={(e) => setSettings((s) => ({ ...s, hubspot_url_oliver: e.target.value }))}
+                      placeholder="https://meetings.hubspot.com/oliver..."
                       className="rounded-xl"
                     />
                   </div>
