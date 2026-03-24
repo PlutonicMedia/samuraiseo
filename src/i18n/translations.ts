@@ -48,21 +48,27 @@ export const translations = {
       "Over €1,000,000",
     ],
 
-    // Q6
-    q6Title: "Do you currently have full control over your SEO and AI LLM Search Visibility?",
-    q6Yes: "Yes",
-    q6No: "No",
-    q6InfoTitle: "What does perfect SEO & AI visibility mean in 2026?",
-    q6InfoText: "It means fully optimized meta titles, descriptions, structured data (JSON-LD), AI-readable content, semantic HTML, internal linking, image alt texts, Open Graph tags, and crawlability for both Google and AI LLMs like ChatGPT, Perplexity, and Gemini — across every single product, collection, and blog post. For most stores, achieving this manually is nearly impossible at scale.",
-
-    // Results
+    // Results — Pain page
     resultsTitle: "Your Time-Saving Potential",
-    resultsManual: "Manual optimization",
-    resultsSamurai: "With Samurai",
-    resultsSaved: "You could save",
-    resultsHoursYear: "hours per year",
-    resultsDesc: "by automating your Shopify SEO with Samurai & Plutonic Media.",
-    shareResult: "Share My Result",
+    painCard1Pre: "You spend",
+    painCard1Post: "hours on product creation and optimization each month.",
+    painCard2Pre: "You have",
+    painCard2Mid: "existing products that would take",
+    painCard2Post: "hours to manually optimize for SEO, CRO, GEO, etc.",
+    samuraiPitch: "With Samurai, product creation, product optimization and even collection optimization is automated.",
+    plazaCaseHeading: "Our client and leading E-Commerce jewellery store in Denmark saved:",
+    plazaStat1: "66 hours monthly on new product creation",
+    plazaStat2: "32 hours monthly on product/collection optimization",
+    plazaTrafficStat: "They also grew their organic traffic with +135%.",
+    plazaQuote: "Samurai saves me and my team countless hours each month without compromising quality. It is freeing up so much time that is now being spent on strategy.",
+    plazaQuoteAuthor: "– CEO, PLAZA",
+    wantToKnowCta: "Want to know how we did it?",
+
+    // Results — Solution page
+    solutionTitle: "How we scale your business",
+    solutionPoint1: "We integrate Samurai with your Shopify and can collect and optimize any product — new or existing.",
+    solutionPoint2: "We automate optimization of collections with 2026-ready meta data, text, FAQ, schema markup, internal links, etc.",
+    solutionPoint3: "The PLAZA case won us the Reaktion 2025 case competition and we were a finalist at European Search Awards (for scaling SEO exponentially and profitable).",
 
     // CTAs
     fillFormCta: "Fill Out the Form",
@@ -79,11 +85,12 @@ export const translations = {
     contactCompany: "Company",
     contactSubmit: "Book a Demo",
 
-    // Secondary CTA
-    secondaryTitle: "See the Quality First",
-    secondarySubtitle: "Get free AI-generated SEO texts for your store.",
-    secondaryPlaceholder: "Your website URL",
-    secondarySubmit: "Get Free SEO Texts",
+    // Downsell CTA
+    downsellTitle: "Experience the quality.",
+    downsellSubtitle: "Get a free optimized collection text for your business.",
+    downsellUrlPlaceholder: "Your Shopify collection URL",
+    downsellEmailPlaceholder: "Your email",
+    downsellSubmit: "Get free collection text",
 
     // Trust sidebar
     trustTitle: "Built by Plutonic Media",
@@ -95,6 +102,9 @@ export const translations = {
     trustPlazaStat2: "Net Profit +185%",
     trustPlazaStat3: "CAC 29% Lower",
     trustPlazaStat4: "Sales from Ads +137%",
+
+    // Share (kept for potential re-use)
+    shareResult: "Share My Result",
 
     // Thank you
     thankYouTitle: "Thank You!",
@@ -140,19 +150,27 @@ export const translations = {
       "Over 7.000.000 kr.",
     ],
 
-    q6Title: "Har du fuld kontrol over din SEO og AI LLM-søgesynlighed?",
-    q6Yes: "Ja",
-    q6No: "Nej",
-    q6InfoTitle: "Hvad betyder perfekt SEO & AI-synlighed i 2026?",
-    q6InfoText: "Det betyder fuldt optimerede metatitler, beskrivelser, strukturerede data (JSON-LD), AI-læsbart indhold, semantisk HTML, intern linkbuilding, billed-alt-tekster, Open Graph-tags og crawlbarhed for både Google og AI LLM'er som ChatGPT, Perplexity og Gemini — på tværs af hvert eneste produkt, kollektion og blogindlæg. For de fleste butikker er det næsten umuligt at opnå manuelt i stor skala.",
-
+    // Results — Pain page
     resultsTitle: "Dit Tidsbesparende Potentiale",
-    resultsManual: "Manuel optimering",
-    resultsSamurai: "Med Samurai",
-    resultsSaved: "Du kan spare",
-    resultsHoursYear: "timer om året",
-    resultsDesc: "ved at automatisere din Shopify SEO med Samurai & Plutonic Media.",
-    shareResult: "Del Mit Resultat",
+    painCard1Pre: "Du bruger",
+    painCard1Post: "timer på produktoprettelse og optimering hver måned.",
+    painCard2Pre: "Du har",
+    painCard2Mid: "eksisterende produkter, der ville tage",
+    painCard2Post: "timer at optimere manuelt for SEO, CRO, GEO osv.",
+    samuraiPitch: "Med Samurai automatiseres produktoprettelse, produktoptimering og endda kollektionsoptimering.",
+    plazaCaseHeading: "Vores kunde og førende e-commerce smykkebutik i Danmark sparede:",
+    plazaStat1: "66 timer månedligt på ny produktoprettelse",
+    plazaStat2: "32 timer månedligt på produkt-/kollektionsoptimering",
+    plazaTrafficStat: "De øgede også deres organiske trafik med +135%.",
+    plazaQuote: "Samurai sparer mig og mit team utallige timer hver måned uden at gå på kompromis med kvaliteten. Det frigør så meget tid, som nu bruges på strategi.",
+    plazaQuoteAuthor: "– CEO, PLAZA",
+    wantToKnowCta: "Vil du vide, hvordan vi gjorde det?",
+
+    // Results — Solution page
+    solutionTitle: "Sådan skalerer vi din forretning",
+    solutionPoint1: "Vi integrerer Samurai med din Shopify og kan indsamle og optimere ethvert produkt — nyt eller eksisterende.",
+    solutionPoint2: "Vi automatiserer optimering af kollektioner med 2026-klar metadata, tekst, FAQ, schema markup, interne links osv.",
+    solutionPoint3: "PLAZA-casen vandt os Reaktion 2025 case-konkurrencen, og vi var finalist ved European Search Awards (for at skalere SEO eksponentielt og profitabelt).",
 
     fillFormCta: "Udfyld Formularen",
     bookMeetingCta: "Book et Møde med en Specialist",
@@ -167,10 +185,11 @@ export const translations = {
     contactCompany: "Virksomhed",
     contactSubmit: "Book en Demo",
 
-    secondaryTitle: "Se Kvaliteten Først",
-    secondarySubtitle: "Få gratis AI-genererede SEO-tekster til din butik.",
-    secondaryPlaceholder: "Din hjemmeside-URL",
-    secondarySubmit: "Få Gratis SEO-tekster",
+    downsellTitle: "Oplev kvaliteten.",
+    downsellSubtitle: "Få en gratis optimeret kollektionstekst til din virksomhed.",
+    downsellUrlPlaceholder: "Din Shopify kollektion-URL",
+    downsellEmailPlaceholder: "Din e-mail",
+    downsellSubmit: "Få gratis kollektionstekst",
 
     trustTitle: "Bygget af Plutonic Media",
     trustDesc: "Danmarks AI-first digitale bureau. Vi kombinerer banebrydende AI med gennemprøvede marketingstrategier.",
@@ -181,6 +200,8 @@ export const translations = {
     trustPlazaStat2: "Nettoprofit +185%",
     trustPlazaStat3: "CAC 29% Lavere",
     trustPlazaStat4: "Salg fra Annoncer +137%",
+
+    shareResult: "Del Mit Resultat",
 
     thankYouTitle: "Tak!",
     thankYouMessage: "Vi har modtaget dine oplysninger og vender tilbage hurtigst muligt.",
