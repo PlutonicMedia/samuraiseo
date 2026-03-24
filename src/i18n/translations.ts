@@ -35,8 +35,8 @@ export const translations = {
     q3Placeholder: "Enter expected volume",
 
     // Q4
-    q4Title: "How long does it take you to create and optimize each?",
-    q4Label: "minutes per item",
+    q4Title: "How long does it take you to create and optimize each product? (SEO, text, images, meta fields, tags, etc.)",
+    q4Label: "minutes per product",
 
     // Q5
     q5Title: "What is your approximate monthly revenue?",
@@ -128,8 +128,8 @@ export const translations = {
     q3Label: "produkter/måned",
     q3Placeholder: "Indtast forventet antal",
 
-    q4Title: "Hvor lang tid tager det dig at oprette og optimere hvert?",
-    q4Label: "minutter per element",
+    q4Title: "Hvor lang tid tager det dig at oprette og optimere hvert produkt? (SEO, tekst, billeder, metafelter, tags osv.)",
+    q4Label: "minutter per produkt",
 
     q5Title: "Hvad er din omtrentlige månedlige omsætning?",
     q5Options: [
