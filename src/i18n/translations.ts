@@ -7,8 +7,8 @@ export const translations = {
     poweredBy: "by Plutonic Media",
 
     // Hero
-    heroTitle: "Could you imagine optimizing your entire Shopify store at once? Test",
-    heroSubtitle: "100% SEO-optimization for all your collections, products, and blog posts — powered by AI.",
+    heroTitle: "Say goodbye to manual product creation and SEO optimization.",
+    heroSubtitle: "Samurai offers 100% high-quality SEO-optimization for all your collections and products — powered by AI.",
     heroCta: "See how much time you could save",
 
     // Quiz
@@ -105,8 +105,8 @@ export const translations = {
     langSwitch: "EN",
     poweredBy: "af Plutonic Media",
 
-    heroTitle: "Forestil dig at optimere hele din Shopify-butik på én gang?",
-    heroSubtitle: "100% SEO-optimering af alle dine kollektioner, produkter og blogindlæg — drevet af AI.",
+    heroTitle: "Sig farvel til manuel produktoprettelse og SEO-optimering.",
+    heroSubtitle: "Samurai tilbyder 100% SEO-optimering af høj kvalitet for alle dine kollektioner og produkter — drevet af AI.",
     heroCta: "Se hvor meget tid du kan spare",
 
     progressLabel: "Spørgsmål",
