@@ -39,13 +39,13 @@ export const translations = {
     q4Label: "minutes per product",
 
     // Q5
-    q5Title: "What is your approximate monthly revenue?",
+    q5Title: "What is your monthly online revenue?",
     q5Options: [
-      "Under $10,000",
-      "$10,000 – $50,000",
-      "$50,000 – $200,000",
-      "$200,000 – $1,000,000",
-      "Over $1,000,000",
+      "Under €10,000",
+      "€10,000 – €50,000",
+      "€50,000 – €200,000",
+      "€200,000 – €1,000,000",
+      "Over €1,000,000",
     ],
 
     // Q6
