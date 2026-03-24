@@ -131,7 +131,7 @@ export const translations = {
     q4Title: "Hvor lang tid tager det dig at oprette og optimere hvert produkt? (SEO, tekst, billeder, metafelter, tags osv.)",
     q4Label: "minutter per produkt",
 
-    q5Title: "Hvad er din omtrentlige månedlige omsætning?",
+    q5Title: "Hvad er din månedlige omsætning?",
     q5Options: [
       "Under 75.000 kr.",
       "75.000 – 350.000 kr.",
