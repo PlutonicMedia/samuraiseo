@@ -7,7 +7,7 @@ export const translations = {
     poweredBy: "by Plutonic Media",
 
     // Hero
-    heroTitle: "Could you imagine optimizing your entire Shopify store at once?",
+    heroTitle: "Could you imagine optimizing your entire Shopify store at once? Test",
     heroSubtitle: "100% SEO-optimization for all your collections, products, and blog posts — powered by AI.",
     heroCta: "See how much time you could save",
 
