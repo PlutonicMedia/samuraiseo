@@ -277,7 +277,7 @@ const ResultsSection = ({ answers }: ResultsSectionProps) => {
                   </p>
                   <div className="bg-background/60 rounded-xl p-4 border border-border/30 flex gap-4 items-start">
                     <Avatar className="h-12 w-12 shrink-0 mt-1">
-                      <AvatarImage src="/aske-frederiksen.jpg" alt="Aske Frederiksen" />
+                      <AvatarImage src={askeImg} alt="Aske Frederiksen" />
                       <AvatarFallback className="bg-primary/10 text-primary font-bold">AF</AvatarFallback>
                     </Avatar>
                     <div>
