@@ -11,8 +11,12 @@ import { trackCustomEvent } from "@/lib/facebook-pixel";
 import { toast } from "sonner";
 import { Clock, Package, ArrowRight, Send, CalendarDays, FileText, X, Globe, Quote, Workflow, Zap, Trophy } from "lucide-react";
 import { z } from "zod";
-import reaktionBadge from "@/assets/trust-reaktion.png";
-import searchAwardsBadge from "@/assets/trust-search-awards.png";
+import reaktionBadge from "@/assets/reaktion-winner.png";
+import searchAwardsBadge from "@/assets/european-search-awards.png";
+import askeImg from "@/assets/aske-frederiksen.jpg";
+import kasperImg from "@/assets/kasper-plutonic.jpg";
+import peterImg from "@/assets/peter-plutonic.png";
+import oliverImg from "@/assets/oliver-plutonic.png";
 
 interface ResultsSectionProps {
   answers: {
