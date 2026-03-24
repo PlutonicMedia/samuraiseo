@@ -26,7 +26,7 @@ export const translations = {
     q1NoLink: "Plutonic Media",
 
     // Q2
-    q2Title: "How many products do you have in your catalog?",
+    q2Title: "How many products do you currently have in your Shopify?",
     q2Label: "products",
 
     // Q3
