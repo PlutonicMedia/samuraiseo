@@ -131,6 +131,18 @@ const ResultsSection = ({ answers }: ResultsSectionProps) => {
       });
       if (error) throw error;
       trackCustomEvent("LeadFormSubmit", { userMonthlyHours });
+      // Fire notification email (non-blocking)
+      supabase.functions.invoke("notify-submission", {
+        body: {
+          type: "quiz_submission",
+          record: {
+            name: result.data.name, email: result.data.email, phone: result.data.phone,
+            company: result.data.company, product_count: answers.productCount,
+            expected_volume: answers.expectedVolume, time_per_item: answers.timePerItem,
+            revenue_range: answers.revenueRange, saved_hours: userMonthlyHours,
+          },
+        },
+      }).catch(console.error);
       navigate("/thank-you");
     } catch {
       toast.error("Something went wrong. Please try again.");
@@ -150,6 +162,10 @@ const ResultsSection = ({ answers }: ResultsSectionProps) => {
       const { error } = await supabase.from("seo_text_requests").insert({ website_url: url, email });
       if (error) throw error;
       trackCustomEvent("SeoTextRequest", { url, email });
+      // Fire notification email (non-blocking)
+      supabase.functions.invoke("notify-submission", {
+        body: { type: "seo_request", record: { website_url: url, email } },
+      }).catch(console.error);
       navigate("/thank-you");
     } catch {
       toast.error("Something went wrong. Please try again.");
