@@ -121,7 +121,7 @@ export const translations = {
     q1NoMessage: "Samurai er bygget specifikt til Shopify. For skræddersyede AI-løsninger, besøg",
     q1NoLink: "Plutonic Media",
 
-    q2Title: "Hvor mange produkter har du i dit katalog?",
+    q2Title: "Hvor mange produkter har du på nuværende tidspunkt i din Shopify?",
     q2Label: "produkter",
 
     q3Title: "Hvor mange produkter opretter du i gennemsnit per måned?",
