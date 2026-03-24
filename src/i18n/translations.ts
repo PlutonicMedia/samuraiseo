@@ -30,7 +30,7 @@ export const translations = {
     q2Label: "products",
 
     // Q3
-    q3Title: "How many products do you expect to create on average per month in 2026?",
+    q3Title: "How many products do you create on average per month?",
     q3Label: "products/month",
     q3Placeholder: "Enter expected volume",
 
@@ -124,7 +124,7 @@ export const translations = {
     q2Title: "Hvor mange produkter har du i dit katalog?",
     q2Label: "produkter",
 
-    q3Title: "Hvor mange produkter forventer du at oprette i gennemsnit per måned i 2026?",
+    q3Title: "Hvor mange produkter opretter du i gennemsnit per måned?",
     q3Label: "produkter/måned",
     q3Placeholder: "Indtast forventet antal",
 
