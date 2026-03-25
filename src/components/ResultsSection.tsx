@@ -180,18 +180,28 @@ const ResultsSection = ({ answers }: ResultsSectionProps) => {
     }
   };
 
-  const featureCards = [
-    { icon: Link, titleKey: "featureCard1Title" as const, descKey: "featureCard1Desc" as const, color: "bg-primary/10 text-primary" },
-    { icon: Zap, titleKey: "featureCard2Title" as const, descKey: "featureCard2Desc" as const, extraKey: "featureCard2Extra" as const, color: "bg-accent/15 text-accent", hasTooltips: true },
-    { icon: Cpu, titleKey: "featureCard3Title" as const, descKey: "featureCard3Desc" as const, color: "bg-primary/10 text-primary" },
-    { icon: Trophy, titleKey: "featureCard4Title" as const, descKey: "featureCard4Desc" as const, color: "bg-accent/15 text-accent" },
-  ];
-
   const tooltipTerms = [
+    { term: t("pillTekstTitle") as string, descKey: "pillTekstDesc" as const },
     { term: "Metadata", desc: "Titel-tags og meta-beskrivelser der optimerer din synlighed i søgeresultater." },
     { term: "FAQ", desc: "Strukturerede spørgsmål og svar der vises direkte i Google-søgeresultater." },
     { term: "Schema", desc: "Struktureret data-markup der hjælper søgemaskiner med at forstå dit indhold." },
     { term: "Interne links", desc: "Links mellem dine egne sider der styrker din sidestruktur og SEO." },
+  ];
+
+  const truncateWords = (text: string, count: number) => {
+    const words = text.split(" ");
+    if (words.length <= count) return { truncated: text, isTruncated: false };
+    return { truncated: words.slice(0, count).join(" ") + "…", isTruncated: true };
+  };
+
+  const [expandedCards, setExpandedCards] = useState<Record<string, boolean>>({});
+  const toggleCard = (key: string) => setExpandedCards((prev) => ({ ...prev, [key]: !prev[key] }));
+
+  const featureCards = [
+    { icon: Link, titleKey: "featureCard1Title" as const, descKey: "featureCard1Desc" as const, color: "bg-primary/10 text-primary" },
+    { icon: Zap, titleKey: "featureCard2Title" as const, descKey: null, color: "bg-accent/15 text-accent", hasPills: true },
+    { icon: Cpu, titleKey: "featureCard3Title" as const, descKey: "featureCard3Desc" as const, color: "bg-primary/10 text-primary", truncatable: true },
+    { icon: Trophy, titleKey: "featureCard4Title" as const, descKey: "featureCard4Desc" as const, color: "bg-accent/15 text-accent", truncatable: true },
   ];
 
   return (
