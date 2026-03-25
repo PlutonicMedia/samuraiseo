@@ -176,6 +176,9 @@ export type Database = {
           hubspot_url_peter: string | null
           id: number
           notification_email: string | null
+          specialist_kasper_enabled: boolean
+          specialist_oliver_enabled: boolean
+          specialist_peter_enabled: boolean
           updated_at: string
         }
         Insert: {
@@ -186,6 +189,9 @@ export type Database = {
           hubspot_url_peter?: string | null
           id?: number
           notification_email?: string | null
+          specialist_kasper_enabled?: boolean
+          specialist_oliver_enabled?: boolean
+          specialist_peter_enabled?: boolean
           updated_at?: string
         }
         Update: {
@@ -196,6 +202,9 @@ export type Database = {
           hubspot_url_peter?: string | null
           id?: number
           notification_email?: string | null
+          specialist_kasper_enabled?: boolean
+          specialist_oliver_enabled?: boolean
+          specialist_peter_enabled?: boolean
           updated_at?: string
         }
         Relationships: []
