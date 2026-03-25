@@ -124,6 +124,10 @@ export const translations = {
 
     // Share (kept for potential re-use)
     shareResult: "Share My Result",
+    readMore: "Read more...",
+    readLess: "Show less",
+    pillTekstTitle: "Text",
+    pillTekstDesc: "We generate complete content: from compelling product descriptions to full SEO texts with correct headings and content that perfectly matches search intent.",
 
     // Thank you
     thankYouTitle: "Thank You!",
@@ -240,6 +244,10 @@ export const translations = {
     trustPlazaStat4: "Salg fra Annoncer +137%",
 
     shareResult: "Del Mit Resultat",
+    readMore: "Læs mere...",
+    readLess: "Vis mindre",
+    pillTekstTitle: "Tekst",
+    pillTekstDesc: "Vi genererer komplet indhold: fra overbevisende produktbeskrivelser til fulde SEO-tekster med korrekte headings og indhold, der matcher søgehensigten perfekt.",
 
     thankYouTitle: "Tak!",
     thankYouMessage: "Vi har modtaget dine oplysninger og vender tilbage hurtigst muligt.",

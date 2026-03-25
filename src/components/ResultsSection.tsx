@@ -5,12 +5,12 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { supabase } from "@/integrations/supabase/client";
 import { useNavigate } from "react-router-dom";
 import { trackCustomEvent } from "@/lib/facebook-pixel";
 import { toast } from "sonner";
 import { Clock, Package, ArrowRight, Send, CalendarDays, FileText, X, Globe, Quote, Link, Zap, Trophy, Cpu } from "lucide-react";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { z } from "zod";
 import reaktionBadge from "@/assets/reaktion-winner.png";
 import searchAwardsBadge from "@/assets/european-search-awards.png";
@@ -180,18 +180,28 @@ const ResultsSection = ({ answers }: ResultsSectionProps) => {
     }
   };
 
-  const featureCards = [
-    { icon: Link, titleKey: "featureCard1Title" as const, descKey: "featureCard1Desc" as const, color: "bg-primary/10 text-primary" },
-    { icon: Zap, titleKey: "featureCard2Title" as const, descKey: "featureCard2Desc" as const, extraKey: "featureCard2Extra" as const, color: "bg-accent/15 text-accent", hasTooltips: true },
-    { icon: Cpu, titleKey: "featureCard3Title" as const, descKey: "featureCard3Desc" as const, color: "bg-primary/10 text-primary" },
-    { icon: Trophy, titleKey: "featureCard4Title" as const, descKey: "featureCard4Desc" as const, color: "bg-accent/15 text-accent" },
-  ];
-
   const tooltipTerms = [
+    { term: t("pillTekstTitle") as string, descKey: "pillTekstDesc" as const },
     { term: "Metadata", desc: "Titel-tags og meta-beskrivelser der optimerer din synlighed i søgeresultater." },
     { term: "FAQ", desc: "Strukturerede spørgsmål og svar der vises direkte i Google-søgeresultater." },
     { term: "Schema", desc: "Struktureret data-markup der hjælper søgemaskiner med at forstå dit indhold." },
     { term: "Interne links", desc: "Links mellem dine egne sider der styrker din sidestruktur og SEO." },
+  ];
+
+  const truncateWords = (text: string, count: number) => {
+    const words = text.split(" ");
+    if (words.length <= count) return { truncated: text, isTruncated: false };
+    return { truncated: words.slice(0, count).join(" ") + "…", isTruncated: true };
+  };
+
+  const [expandedCards, setExpandedCards] = useState<Record<string, boolean>>({});
+  const toggleCard = (key: string) => setExpandedCards((prev) => ({ ...prev, [key]: !prev[key] }));
+
+  const featureCards = [
+    { icon: Link, titleKey: "featureCard1Title" as const, descKey: "featureCard1Desc" as const, color: "bg-primary/10 text-primary" },
+    { icon: Zap, titleKey: "featureCard2Title" as const, descKey: null, color: "bg-accent/15 text-accent", hasPills: true },
+    { icon: Cpu, titleKey: "featureCard3Title" as const, descKey: "featureCard3Desc" as const, color: "bg-primary/10 text-primary", truncatable: true },
+    { icon: Trophy, titleKey: "featureCard4Title" as const, descKey: "featureCard4Desc" as const, color: "bg-accent/15 text-accent", truncatable: true },
   ];
 
   return (
@@ -336,55 +346,77 @@ const ResultsSection = ({ answers }: ResultsSectionProps) => {
             </motion.h2>
 
             {/* Feature Cards */}
-            <TooltipProvider>
             <div className="grid gap-4">
-              {featureCards.map((card, i) => (
-                <motion.div
-                  key={card.titleKey}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.1 + i * 0.12 }}
-                >
-                  <Card className="border-border/50 shadow-md hover:shadow-lg transition-shadow">
-                    <CardContent className="pt-5 pb-5 flex items-start gap-4">
-                      <div className={`${card.color} rounded-xl p-3 shrink-0`}>
-                        <card.icon className="h-6 w-6" />
-                      </div>
-                      <div>
-                        <h3 className="font-sora text-sm font-bold text-foreground mb-1">
-                          {t(card.titleKey) as string}
-                        </h3>
-                        <p className="text-sm text-muted-foreground leading-relaxed">
-                          {t(card.descKey) as string}
-                        </p>
-                        {(card as any).hasTooltips && (
-                          <div className="flex flex-wrap gap-2 mt-2">
-                            {tooltipTerms.map((tt) => (
-                              <Tooltip key={tt.term}>
-                                <TooltipTrigger asChild>
-                                  <span className="text-xs font-medium text-primary bg-primary/10 px-2 py-0.5 rounded-full cursor-help border border-primary/20">
-                                    {tt.term}
-                                  </span>
-                                </TooltipTrigger>
-                                <TooltipContent side="top" className="max-w-[240px] text-xs">
-                                  {tt.desc}
-                                </TooltipContent>
-                              </Tooltip>
-                            ))}
-                          </div>
-                        )}
-                        {(card as any).extraKey && (
-                          <p className="text-xs text-muted-foreground leading-relaxed mt-2 italic">
-                            {t((card as any).extraKey) as string}
-                          </p>
-                        )}
-                      </div>
-                    </CardContent>
-                  </Card>
-                </motion.div>
-              ))}
+              {featureCards.map((card, i) => {
+                const descText = card.descKey ? (t(card.descKey) as string) : "";
+                const isExpanded = expandedCards[card.titleKey] || false;
+                const { truncated, isTruncated } = card.truncatable
+                  ? truncateWords(descText, 12)
+                  : { truncated: descText, isTruncated: false };
+
+                return (
+                  <motion.div
+                    key={card.titleKey}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.1 + i * 0.12 }}
+                  >
+                    <Card className="border-border/50 shadow-md hover:shadow-lg transition-shadow">
+                      <CardContent className="pt-5 pb-5 flex items-start gap-4">
+                        <div className={`${card.color} rounded-xl p-3 shrink-0`}>
+                          <card.icon className="h-6 w-6" />
+                        </div>
+                        <div className="min-w-0">
+                          <h3 className="font-sora text-sm font-bold text-foreground mb-1">
+                            {t(card.titleKey) as string}
+                          </h3>
+                          {card.descKey && (
+                            <>
+                              <AnimatePresence mode="wait" initial={false}>
+                                <motion.p
+                                  key={isExpanded ? "full" : "short"}
+                                  initial={{ opacity: 0 }}
+                                  animate={{ opacity: 1 }}
+                                  exit={{ opacity: 0 }}
+                                  transition={{ duration: 0.2 }}
+                                  className="text-sm text-muted-foreground leading-relaxed inline"
+                                >
+                                  {isTruncated && !isExpanded ? truncated : descText}
+                                </motion.p>
+                              </AnimatePresence>
+                              {isTruncated && (
+                                <button
+                                  onClick={() => toggleCard(card.titleKey)}
+                                  className="text-sm font-medium text-primary hover:text-primary/80 transition-colors ml-1"
+                                >
+                                  {isExpanded ? (t("readLess") as string) : (t("readMore") as string)}
+                                </button>
+                              )}
+                            </>
+                          )}
+                          {(card as any).hasPills && (
+                            <div className="flex flex-wrap gap-2 mt-2">
+                              {tooltipTerms.map((tt) => (
+                                <Popover key={tt.term}>
+                                  <PopoverTrigger asChild>
+                                    <button className="text-xs font-medium text-primary bg-primary/10 px-2.5 py-1 rounded-full cursor-pointer border border-primary/20 hover:bg-primary/20 transition-colors">
+                                      {tt.term}
+                                    </button>
+                                  </PopoverTrigger>
+                                  <PopoverContent side="top" className="max-w-[260px] text-xs p-3">
+                                    {"descKey" in tt ? (t(tt.descKey as any) as string) : (tt as any).desc}
+                                  </PopoverContent>
+                                </Popover>
+                              ))}
+                            </div>
+                          )}
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </motion.div>
+                );
+              })}
             </div>
-            </TooltipProvider>
 
             {/* Trust bar with award images */}
             <motion.div
