@@ -66,14 +66,15 @@ interface Specialist {
   key: string;
   nameKey: string;
   urlField: string;
+  enabledField: string;
   initials: string;
   img: string;
 }
 
 const specialists: Specialist[] = [
-  { key: "kasper", nameKey: "specialistKasper", urlField: "hubspot_url_kasper", initials: "K", img: kasperImg },
-  { key: "peter", nameKey: "specialistPeter", urlField: "hubspot_url_peter", initials: "P", img: peterImg },
-  { key: "oliver", nameKey: "specialistOliver", urlField: "hubspot_url_oliver", initials: "O", img: oliverImg },
+  { key: "kasper", nameKey: "specialistKasper", urlField: "hubspot_url_kasper", enabledField: "specialist_kasper_enabled", initials: "K", img: kasperImg },
+  { key: "peter", nameKey: "specialistPeter", urlField: "hubspot_url_peter", enabledField: "specialist_peter_enabled", initials: "P", img: peterImg },
+  { key: "oliver", nameKey: "specialistOliver", urlField: "hubspot_url_oliver", enabledField: "specialist_oliver_enabled", initials: "O", img: oliverImg },
 ];
 
 const ResultsSection = ({ answers }: ResultsSectionProps) => {
@@ -87,6 +88,7 @@ const ResultsSection = ({ answers }: ResultsSectionProps) => {
   const [submitting, setSubmitting] = useState(false);
   const [submittingSeo, setSubmittingSeo] = useState(false);
   const [specialistUrls, setSpecialistUrls] = useState<Record<string, string>>({});
+  const [specialistEnabled, setSpecialistEnabled] = useState<Record<string, boolean>>({ kasper: true, peter: true, oliver: true });
   const [selectedSpecialist, setSelectedSpecialist] = useState<string | null>(null);
 
   const userMonthlyHours = Math.round((answers.expectedVolume * answers.timePerItem) / 60);
@@ -99,20 +101,27 @@ const ResultsSection = ({ answers }: ResultsSectionProps) => {
   useEffect(() => {
     supabase
       .from("site_settings")
-      .select("hubspot_calendar_url, hubspot_url_kasper, hubspot_url_peter, hubspot_url_oliver")
+      .select("hubspot_calendar_url, hubspot_url_kasper, hubspot_url_peter, hubspot_url_oliver, specialist_kasper_enabled, specialist_peter_enabled, specialist_oliver_enabled")
       .eq("id", 1)
       .single()
       .then(({ data }) => {
         if (data) {
+          const d = data as any;
           setSpecialistUrls({
-            kasper: (data as any).hubspot_url_kasper || "",
-            peter: (data as any).hubspot_url_peter || "",
-            oliver: (data as any).hubspot_url_oliver || "",
+            kasper: d.hubspot_url_kasper || "",
+            peter: d.hubspot_url_peter || "",
+            oliver: d.hubspot_url_oliver || "",
+          });
+          setSpecialistEnabled({
+            kasper: d.specialist_kasper_enabled ?? true,
+            peter: d.specialist_peter_enabled ?? true,
+            oliver: d.specialist_oliver_enabled ?? true,
           });
         }
       });
   }, []);
 
+  const activeSpecialists = specialists.filter((s) => specialistEnabled[s.key]);
   const activeHubspotUrl = selectedSpecialist ? specialistUrls[selectedSpecialist] : null;
 
   const handleContactSubmit = async (e: React.FormEvent) => {
@@ -140,7 +149,6 @@ const ResultsSection = ({ answers }: ResultsSectionProps) => {
       if (error) throw error;
       trackCustomEvent("LeadFormSubmit", { userMonthlyHours });
 
-      // Fetch notification email from settings then send via transactional email
       const { data: settings } = await supabase
         .from("site_settings")
         .select("notification_email")
@@ -183,7 +191,6 @@ const ResultsSection = ({ answers }: ResultsSectionProps) => {
       const { error } = await supabase.from("seo_text_requests").insert({ id: seoId, website_url: url, email });
       if (error) throw error;
       trackCustomEvent("SeoTextRequest", { url, email });
-      // Fetch notification email from settings then send via transactional email
       const { data: settings } = await supabase
         .from("site_settings")
         .select("notification_email")
@@ -210,10 +217,10 @@ const ResultsSection = ({ answers }: ResultsSectionProps) => {
 
   const tooltipTerms = [
     { term: t("pillTekstTitle") as string, descKey: "pillTekstDesc" as const },
-    { term: "Metadata", desc: "Titel-tags og meta-beskrivelser der optimerer din synlighed i søgeresultater." },
-    { term: "FAQ", desc: "Strukturerede spørgsmål og svar der vises direkte i Google-søgeresultater." },
-    { term: "Schema", desc: "Struktureret data-markup der hjælper søgemaskiner med at forstå dit indhold." },
-    { term: "Interne links", desc: "Links mellem dine egne sider der styrker din sidestruktur og SEO." },
+    { term: t("pillMetadata") as string, descKey: "pillMetadataDesc" as const },
+    { term: t("pillFaq") as string, descKey: "pillFaqDesc" as const },
+    { term: t("pillSchema") as string, descKey: "pillSchemaDesc" as const },
+    { term: t("pillInternalLinks") as string, descKey: "pillInternalLinksDesc" as const },
   ];
 
   const truncateWords = (text: string, count: number) => {
@@ -229,7 +236,7 @@ const ResultsSection = ({ answers }: ResultsSectionProps) => {
     { icon: Link, titleKey: "featureCard1Title" as const, descKey: "featureCard1Desc" as const, color: "bg-primary/10 text-primary" },
     { icon: Zap, titleKey: "featureCard2Title" as const, descKey: null, color: "bg-accent/15 text-accent", hasPills: true },
     { icon: Cpu, titleKey: "featureCard3Title" as const, descKey: "featureCard3Desc" as const, color: "bg-primary/10 text-primary", truncatable: true },
-    { icon: Trophy, titleKey: "featureCard4Title" as const, descKey: "featureCard4Desc" as const, color: "bg-accent/15 text-accent", truncatable: true },
+    { icon: Trophy, titleKey: "featureCard4Title" as const, descKey: "featureCard4Desc" as const, color: "bg-accent/15 text-accent", truncatable: true, hasAwards: true },
   ];
 
   return (
@@ -422,6 +429,13 @@ const ResultsSection = ({ answers }: ResultsSectionProps) => {
                               )}
                             </>
                           )}
+                          {/* Award images inside Award-Winning card, visible only when expanded */}
+                          {(card as any).hasAwards && isExpanded && (
+                            <div className="flex flex-col sm:flex-row items-center gap-4 mt-4">
+                              <img src={reaktionBadge} alt="Reaktion Case Competition Winner" className="w-full sm:w-1/2 max-w-[200px] object-contain" />
+                              <img src={searchAwardsBadge} alt="European Search Awards 2025 Finalist" className="w-full sm:w-1/2 max-w-[200px] object-contain" />
+                            </div>
+                          )}
                           {(card as any).hasPills && (
                             <div className="flex flex-wrap gap-2 mt-2">
                               {tooltipTerms.map((tt) => (
@@ -432,7 +446,7 @@ const ResultsSection = ({ answers }: ResultsSectionProps) => {
                                     </button>
                                   </PopoverTrigger>
                                   <PopoverContent side="top" className="max-w-[260px] text-xs p-3">
-                                    {"descKey" in tt ? (t(tt.descKey as any) as string) : (tt as any).desc}
+                                    {t(tt.descKey as any) as string}
                                   </PopoverContent>
                                 </Popover>
                               ))}
@@ -445,30 +459,6 @@ const ResultsSection = ({ answers }: ResultsSectionProps) => {
                 );
               })}
             </div>
-
-            {/* Trust bar with award images */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.5 }}
-              className="flex flex-col sm:flex-row items-center justify-center gap-6 py-4"
-            >
-              <img src={reaktionBadge} alt="Reaktion Case Competition Winner" className="w-full max-w-[200px] sm:max-w-[220px] object-contain" />
-              <img src={searchAwardsBadge} alt="European Search Awards 2025 Finalist" className="w-full max-w-[200px] sm:max-w-[220px] object-contain" />
-            </motion.div>
-
-            {/* SEO Expert Quote */}
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.6 }}
-              className="text-center py-4"
-            >
-              <Quote className="h-5 w-5 text-accent mx-auto mb-2" />
-              <p className="font-sora text-base md:text-lg font-bold text-primary italic leading-relaxed max-w-md mx-auto">
-                {t("seoExpertQuote") as string}
-              </p>
-            </motion.div>
 
             {/* CTA buttons */}
             {ctaState === "idle" && (
@@ -529,8 +519,8 @@ const ResultsSection = ({ answers }: ResultsSectionProps) => {
                     <Card className="border-border/50 shadow-md">
                       <CardContent className="pt-6 pb-6">
                         <h3 className="font-sora text-lg font-bold text-primary mb-4">{t("specialistHeading") as string}</h3>
-                        <div className="grid grid-cols-3 gap-3">
-                          {specialists.map((spec) => (
+                        <div className={`grid gap-3 ${activeSpecialists.length === 2 ? "grid-cols-2" : activeSpecialists.length === 1 ? "grid-cols-1 max-w-[200px] mx-auto" : "grid-cols-3"}`}>
+                          {activeSpecialists.map((spec) => (
                             <button
                               key={spec.key}
                               onClick={() => setSelectedSpecialist(spec.key)}

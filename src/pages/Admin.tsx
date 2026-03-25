@@ -6,8 +6,9 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { Switch } from "@/components/ui/switch";
 import { toast } from "sonner";
-import { LogOut, Save, Mail } from "lucide-react";
+import { LogOut, Save, Mail, Trash2 } from "lucide-react";
 import samuraiLogo from "@/assets/samurai-logo.png";
 
 const Admin = () => {
@@ -22,6 +23,9 @@ const Admin = () => {
     hubspot_url_kasper: "",
     hubspot_url_peter: "",
     hubspot_url_oliver: "",
+    specialist_kasper_enabled: true,
+    specialist_peter_enabled: true,
+    specialist_oliver_enabled: true,
   });
   const [savingSettings, setSavingSettings] = useState(false);
 
@@ -64,6 +68,9 @@ const Admin = () => {
         hubspot_url_kasper: d.hubspot_url_kasper || "",
         hubspot_url_peter: d.hubspot_url_peter || "",
         hubspot_url_oliver: d.hubspot_url_oliver || "",
+        specialist_kasper_enabled: d.specialist_kasper_enabled ?? true,
+        specialist_peter_enabled: d.specialist_peter_enabled ?? true,
+        specialist_oliver_enabled: d.specialist_oliver_enabled ?? true,
       });
     }
   };
@@ -81,6 +88,28 @@ const Admin = () => {
     } finally {
       setSavingSettings(false);
     }
+  };
+
+  const handleDeleteSubmission = async (id: string) => {
+    if (!confirm("Are you sure you want to delete this entry?")) return;
+    const { error } = await supabase.from("quiz_submissions").delete().eq("id", id);
+    if (error) {
+      toast.error("Failed to delete entry.");
+      return;
+    }
+    setSubmissions((prev) => prev.filter((s) => s.id !== id));
+    toast.success("Entry deleted.");
+  };
+
+  const handleDeleteSeoRequest = async (id: string) => {
+    if (!confirm("Are you sure you want to delete this request?")) return;
+    const { error } = await supabase.from("seo_text_requests").delete().eq("id", id);
+    if (error) {
+      toast.error("Failed to delete request.");
+      return;
+    }
+    setSeoRequests((prev) => prev.filter((r) => r.id !== id));
+    toast.success("Request deleted.");
   };
 
   const handleLogout = async () => {
@@ -106,7 +135,7 @@ const Admin = () => {
         <Tabs defaultValue="submissions">
           <TabsList className="mb-6">
             <TabsTrigger value="submissions">Form Entries ({submissions.length})</TabsTrigger>
-            <TabsTrigger value="seo">SEO Requests ({seoRequests.length})</TabsTrigger>
+            <TabsTrigger value="seo">No Requests ({seoRequests.length})</TabsTrigger>
             <TabsTrigger value="settings">Settings</TabsTrigger>
           </TabsList>
 
@@ -127,6 +156,7 @@ const Admin = () => {
                       <TableHead>Revenue</TableHead>
                       <TableHead>SEO Control</TableHead>
                       <TableHead>Hours Saved</TableHead>
+                      <TableHead></TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
@@ -143,10 +173,15 @@ const Admin = () => {
                         <TableCell className="text-xs">{s.revenue_range}</TableCell>
                         <TableCell>{s.has_seo_control ? "Yes" : "No"}</TableCell>
                         <TableCell className="font-bold">{s.saved_hours}h</TableCell>
+                        <TableCell>
+                          <Button variant="ghost" size="icon" onClick={() => handleDeleteSubmission(s.id)} className="text-destructive hover:text-destructive hover:bg-destructive/10">
+                            <Trash2 className="h-4 w-4" />
+                          </Button>
+                        </TableCell>
                       </TableRow>
                     ))}
                     {submissions.length === 0 && (
-                      <TableRow><TableCell colSpan={11} className="text-center text-muted-foreground">No entries yet</TableCell></TableRow>
+                      <TableRow><TableCell colSpan={12} className="text-center text-muted-foreground">No entries yet</TableCell></TableRow>
                     )}
                   </TableBody>
                 </Table>
@@ -163,6 +198,7 @@ const Admin = () => {
                       <TableHead>Date</TableHead>
                       <TableHead>Website URL</TableHead>
                       <TableHead>Email</TableHead>
+                      <TableHead></TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
@@ -175,10 +211,15 @@ const Admin = () => {
                           </a>
                         </TableCell>
                         <TableCell>{r.email || "—"}</TableCell>
+                        <TableCell>
+                          <Button variant="ghost" size="icon" onClick={() => handleDeleteSeoRequest(r.id)} className="text-destructive hover:text-destructive hover:bg-destructive/10">
+                            <Trash2 className="h-4 w-4" />
+                          </Button>
+                        </TableCell>
                       </TableRow>
                     ))}
                     {seoRequests.length === 0 && (
-                      <TableRow><TableCell colSpan={3} className="text-center text-muted-foreground">No requests yet</TableCell></TableRow>
+                      <TableRow><TableCell colSpan={4} className="text-center text-muted-foreground">No requests yet</TableCell></TableRow>
                     )}
                   </TableBody>
                 </Table>
@@ -210,33 +251,30 @@ const Admin = () => {
                   <CardTitle className="font-sora">Specialist Calendar URLs</CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
-                  <div>
-                    <label className="text-sm font-medium text-foreground mb-1 block">Kasper — HubSpot Calendar URL</label>
-                    <Input
-                      value={settings.hubspot_url_kasper}
-                      onChange={(e) => setSettings((s) => ({ ...s, hubspot_url_kasper: e.target.value }))}
-                      placeholder="https://meetings.hubspot.com/kasper..."
-                      className="rounded-xl"
-                    />
-                  </div>
-                  <div>
-                    <label className="text-sm font-medium text-foreground mb-1 block">Peter — HubSpot Calendar URL</label>
-                    <Input
-                      value={settings.hubspot_url_peter}
-                      onChange={(e) => setSettings((s) => ({ ...s, hubspot_url_peter: e.target.value }))}
-                      placeholder="https://meetings.hubspot.com/peter..."
-                      className="rounded-xl"
-                    />
-                  </div>
-                  <div>
-                    <label className="text-sm font-medium text-foreground mb-1 block">Oliver — HubSpot Calendar URL</label>
-                    <Input
-                      value={settings.hubspot_url_oliver}
-                      onChange={(e) => setSettings((s) => ({ ...s, hubspot_url_oliver: e.target.value }))}
-                      placeholder="https://meetings.hubspot.com/oliver..."
-                      className="rounded-xl"
-                    />
-                  </div>
+                  {[
+                    { label: "Kasper", urlKey: "hubspot_url_kasper" as const, enabledKey: "specialist_kasper_enabled" as const },
+                    { label: "Peter", urlKey: "hubspot_url_peter" as const, enabledKey: "specialist_peter_enabled" as const },
+                    { label: "Oliver", urlKey: "hubspot_url_oliver" as const, enabledKey: "specialist_oliver_enabled" as const },
+                  ].map((spec) => (
+                    <div key={spec.urlKey} className="space-y-2">
+                      <div className="flex items-center justify-between">
+                        <label className="text-sm font-medium text-foreground">{spec.label} — HubSpot Calendar URL</label>
+                        <div className="flex items-center gap-2">
+                          <span className="text-xs text-muted-foreground">{settings[spec.enabledKey] ? "Visible" : "Hidden"}</span>
+                          <Switch
+                            checked={settings[spec.enabledKey]}
+                            onCheckedChange={(checked) => setSettings((s) => ({ ...s, [spec.enabledKey]: checked }))}
+                          />
+                        </div>
+                      </div>
+                      <Input
+                        value={settings[spec.urlKey]}
+                        onChange={(e) => setSettings((s) => ({ ...s, [spec.urlKey]: e.target.value }))}
+                        placeholder={`https://meetings.hubspot.com/${spec.label.toLowerCase()}...`}
+                        className="rounded-xl"
+                      />
+                    </div>
+                  ))}
                 </CardContent>
               </Card>
 
