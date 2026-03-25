@@ -409,7 +409,6 @@ const ResultsSection = ({ answers }: ResultsSectionProps) => {
                 {t("seoExpertQuote") as string}
               </p>
             </motion.div>
-            </motion.div>
 
             {/* CTA buttons */}
             {ctaState === "idle" && (
