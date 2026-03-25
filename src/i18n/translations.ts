@@ -58,7 +58,7 @@ export const translations = {
     samuraiPitch: "With Samurai, product creation, product optimization and even collection optimization is automated.",
     plazaCaseHeading: "Our client and leading E-Commerce jewellery store PLAZA saved:",
     plazaStat1: "66 hours monthly on new product creation",
-    plazaStat2: "32 hours monthly on product/collection optimization",
+    plazaStat2: "1250 total hours on product/collection optimization",
     plazaTrafficStat: "They also grew their organic traffic with +135% and grew profit with +306% YoY.",
     plazaQuote: "Samurai saves me and my team countless hours each month without compromising quality. It is freeing up so much time that is now being spent on strategy.",
     plazaQuoteAuthor: "Aske Frederiksen - CEO, PLAZA",
@@ -80,7 +80,6 @@ export const translations = {
     featureCard3Desc: "We always use the latest AI models combined with complex workflows. Samurai analyzes your Shopify data, crawls top SERP results, 'People Also Ask' and related searches, plus live URLs and Google Search Console data to ensure best-practice optimization.",
     featureCard4Title: "Award-Winning Results",
     featureCard4Desc: "Winner of Reaktion 2025 Case Competition and European Search Awards finalist. Our solution saves enormous amounts of time without compromising quality, creating the foundation for exponential growth.",
-    seoExpertQuote: "We are SEO experts who use AI — not AI experts with no knowledge of SEO.",
 
     // CTAs
     fillFormCta: "Fill Out the Form",
@@ -128,6 +127,14 @@ export const translations = {
     readLess: "Show less",
     pillTekstTitle: "Text",
     pillTekstDesc: "We generate complete content: from compelling product descriptions to full SEO texts with correct headings and content that perfectly matches search intent.",
+    pillMetadata: "Metadata",
+    pillMetadataDesc: "Title tags and meta descriptions that optimize your visibility in search results.",
+    pillFaq: "FAQ",
+    pillFaqDesc: "Structured questions and answers that appear directly in Google search results.",
+    pillSchema: "Schema",
+    pillSchemaDesc: "Structured data markup that helps search engines and LLMs understand your content.",
+    pillInternalLinks: "Internal links",
+    pillInternalLinksDesc: "Links between your own pages that strengthen your site structure and SEO.",
 
     // Thank you
     thankYouTitle: "Thank You!",
@@ -183,7 +190,7 @@ export const translations = {
     samuraiPitch: "Med Samurai automatiseres produktoprettelse, produktoptimering og endda optimering af collections.",
     plazaCaseHeading: "Vores kunde og førende e-commerce smykkebutik PLAZA sparede:",
     plazaStat1: "66 timer månedligt på ny produktoprettelse",
-    plazaStat2: "32 timer månedligt på produkt-/collection optimering",
+    plazaStat2: "1250 timer totalt på produkt-/collection optimering",
     plazaTrafficStat: "De øgede også deres organiske trafik med +135% og øgede profit med +306% YoY.",
     plazaQuote: "Samurai sparer mig og mit team utallige timer hver måned uden at gå på kompromis med kvaliteten. Det frigør så meget tid, som nu bruges på strategi.",
     plazaQuoteAuthor: "Aske Frederiksen - CEO, PLAZA",
@@ -205,7 +212,6 @@ export const translations = {
     featureCard3Desc: "Vi anvender altid de nyeste AI-modeller kombineret med komplekse workflows. Samurai analyserer jeres Shopify-data, crawler SERP-topresultater, 'People Also Ask' og relaterede søgninger, samt live-URL'er og Google Search Console data for at sikre best-practice optimering.",
     featureCard4Title: "Prisvindende resultater",
     featureCard4Desc: "Vinder af Reaktion 2025 Case Competition og nomineret til European Search Awards. Vores løsning sparer enorme mængder tid uden at gå på kompromis med kvaliteten, hvilket skaber fundamentet for eksponentiel vækst.",
-    seoExpertQuote: "Vi er SEO-eksperter, der anvender AI — ikke AI-eksperter uden kendskab til SEO.",
 
     fillFormCta: "Udfyld formularen",
     bookMeetingCta: "Book et møde med en specialist",
@@ -248,6 +254,14 @@ export const translations = {
     readLess: "Vis mindre",
     pillTekstTitle: "Tekst",
     pillTekstDesc: "Vi genererer komplet indhold: fra overbevisende produktbeskrivelser til fulde SEO-tekster med korrekte headings og indhold, der matcher søgehensigten perfekt.",
+    pillMetadata: "Metadata",
+    pillMetadataDesc: "Titel-tags og meta-beskrivelser der optimerer din synlighed i søgeresultater.",
+    pillFaq: "FAQ",
+    pillFaqDesc: "Strukturerede spørgsmål og svar der vises direkte i Google-søgeresultater.",
+    pillSchema: "Schema",
+    pillSchemaDesc: "Struktureret data-markup der hjælper søgemaskiner og LLMs med at forstå dit indhold.",
+    pillInternalLinks: "Interne links",
+    pillInternalLinksDesc: "Links mellem dine egne sider der styrker din sidestruktur og SEO.",
 
     thankYouTitle: "Tak!",
     thankYouMessage: "Vi har modtaget dine oplysninger og vender tilbage hurtigst muligt.",
