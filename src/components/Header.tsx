@@ -9,7 +9,7 @@ const Header = () => {
   return (
     <header className="w-full py-4 px-6 flex items-center justify-between border-b border-border/50 bg-background/80 backdrop-blur-sm sticky top-0 z-50">
       <div className="flex items-center gap-2">
-        <img src={samuraiLogo} alt="Samurai SEO" className="h-14 w-auto" />
+        <img src={samuraiLogo} alt="Samurai SEO" className="h-16 w-auto" />
         <span className="text-xs text-muted-foreground hidden sm:inline">{t("poweredBy") as string}</span>
       </div>
       <Button
