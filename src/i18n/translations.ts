@@ -72,11 +72,15 @@ export const translations = {
 
     // Feature cards
     featureCard1Title: "Shopify Integration",
-    featureCard1Desc: "Collect and optimize any product — new or existing.",
+    featureCard1Desc: "Collect and optimize any product — new or existing. Everything is managed centrally from Samurai with intelligent AI control.",
     featureCard2Title: "2026-Ready Automation",
     featureCard2Desc: "Metadata, text, FAQ, schema, and internal links.",
-    featureCard3Title: "Award-Winning Growth",
-    featureCard3Desc: "Winner of Reaktion 2025 and European Search Awards finalist.",
+    featureCard2Extra: "We generate complete content: from compelling product descriptions to full SEO texts with correct headings and content that perfectly matches search intent.",
+    featureCard3Title: "Data-Driven AI SEO",
+    featureCard3Desc: "We always use the latest AI models combined with complex workflows. Samurai analyzes your Shopify data, crawls top SERP results, 'People Also Ask' and related searches, plus live URLs and Google Search Console data to ensure best-practice optimization.",
+    featureCard4Title: "Award-Winning Results",
+    featureCard4Desc: "Winner of Reaktion 2025 Case Competition and European Search Awards finalist. Our solution saves enormous amounts of time without compromising quality, creating the foundation for exponential growth.",
+    seoExpertQuote: "We are SEO experts who use AI — not AI experts with no knowledge of SEO.",
 
     // CTAs
     fillFormCta: "Fill Out the Form",
@@ -166,17 +170,17 @@ export const translations = {
     ],
 
     // Results — Pain page
-    resultsTitle: "Dit Tidsbesparende Potentiale",
+    resultsTitle: "Dit tidsbesparende potentiale",
     painCard1Pre: "Du bruger",
     painCard1Post: "timer på produktoprettelse og optimering hver måned.",
     painCard2Pre: "Du har",
     painCard2Mid: "eksisterende produkter, der ville tage",
     painCard2Post: "timer at optimere manuelt for SEO, CRO, GEO osv.",
-    samuraiPitch: "Med Samurai automatiseres produktoprettelse, produktoptimering og endda kollektionsoptimering.",
+    samuraiPitch: "Med Samurai automatiseres produktoprettelse, produktoptimering og endda optimering af collections.",
     plazaCaseHeading: "Vores kunde og førende e-commerce smykkebutik PLAZA sparede:",
     plazaStat1: "66 timer månedligt på ny produktoprettelse",
-    plazaStat2: "32 timer månedligt på produkt-/kollektionsoptimering",
-    plazaTrafficStat: "De øgede også deres organiske trafik med +135% og øgede profit med +306% ÅoÅ.",
+    plazaStat2: "32 timer månedligt på produkt-/collection optimering",
+    plazaTrafficStat: "De øgede også deres organiske trafik med +135% og øgede profit med +306% YoY.",
     plazaQuote: "Samurai sparer mig og mit team utallige timer hver måned uden at gå på kompromis med kvaliteten. Det frigør så meget tid, som nu bruges på strategi.",
     plazaQuoteAuthor: "Aske Frederiksen - CEO, PLAZA",
     wantToKnowCta: "Vil du vide, hvordan vi gjorde det?",
@@ -189,14 +193,18 @@ export const translations = {
 
     // Feature cards
     featureCard1Title: "Shopify Integration",
-    featureCard1Desc: "Indsaml og optimer ethvert produkt — nyt eller eksisterende.",
-    featureCard2Title: "2026-Klar Automatisering",
+    featureCard1Desc: "Indsaml og optimer ethvert produkt — nyt eller eksisterende. Alt håndteres centralt fra Samurai med intelligent AI-styring.",
+    featureCard2Title: "2026-klar automatisering",
     featureCard2Desc: "Metadata, tekst, FAQ, schema og interne links.",
-    featureCard3Title: "Prisvindende Vækst",
-    featureCard3Desc: "Vinder af Reaktion 2025 og European Search Awards finalist.",
+    featureCard2Extra: "Vi genererer komplet indhold: fra overbevisende produktbeskrivelser til fulde SEO-tekster med korrekte headings og indhold, der matcher søgehensigten perfekt.",
+    featureCard3Title: "Datadrevet AI SEO",
+    featureCard3Desc: "Vi anvender altid de nyeste AI-modeller kombineret med komplekse workflows. Samurai analyserer jeres Shopify-data, crawler SERP-topresultater, 'People Also Ask' og relaterede søgninger, samt live-URL'er og Google Search Console data for at sikre best-practice optimering.",
+    featureCard4Title: "Prisvindende resultater",
+    featureCard4Desc: "Vinder af Reaktion 2025 Case Competition og nomineret til European Search Awards. Vores løsning sparer enorme mængder tid uden at gå på kompromis med kvaliteten, hvilket skaber fundamentet for eksponentiel vækst.",
+    seoExpertQuote: "Vi er SEO-eksperter, der anvender AI — ikke AI-eksperter uden kendskab til SEO.",
 
-    fillFormCta: "Udfyld Formularen",
-    bookMeetingCta: "Book et Møde med en Specialist",
+    fillFormCta: "Udfyld formularen",
+    bookMeetingCta: "Book et møde med en specialist",
     notReadyCta: "Nej tak, jeg er ikke klar endnu",
     hubspotPlaceholder: "HubSpot Kalender Embed — konfigurer URL i admin-indstillinger",
 
@@ -207,13 +215,13 @@ export const translations = {
     specialistOliver: "Oliver",
     specialistBook: "Book med",
 
-    contactTitle: "Kom i Gang med Samurai",
+    contactTitle: "Kom i gang med Samurai",
     contactSubtitle: "Efterlad dine oplysninger, så kontakter vi dig for en demo.",
     contactName: "Navn",
     contactPhone: "Telefon",
     contactEmail: "E-mail",
     contactCompany: "Virksomhed",
-    contactSubmit: "Book en Demo",
+    contactSubmit: "Book en demo",
 
     downsellTitle: "Oplev kvaliteten.",
     downsellSubtitle: "Få en gratis optimeret kollektionstekst til din virksomhed.",
