@@ -135,14 +135,14 @@ export const translations = {
     poweredBy: "af Plutonic Media",
 
     heroTitle: "Sig farvel til manuel produktoprettelse og SEO-optimering.",
-    heroSubtitle: "Samurai tilbyder 100% SEO-optimering af høj kvalitet for alle dine kollektioner og produkter — drevet af AI.",
+    heroSubtitle: "Samurai tilbyder 100% SEO-optimering af høj kvalitet for alle dine collections og produkter — drevet af AI.",
     heroCta: "Se hvor meget tid du kan spare",
 
     progressLabel: "Spørgsmål",
     of: "af",
     next: "Næste",
     back: "Tilbage",
-    seeResults: "Se Mine Resultater",
+    seeResults: "Se mine resultater",
 
     q1Title: "Bruger du Shopify i øjeblikket?",
     q1Yes: "Ja",
@@ -225,9 +225,9 @@ export const translations = {
 
     downsellTitle: "Oplev kvaliteten.",
     downsellSubtitle: "Få en gratis optimeret kollektionstekst til din virksomhed.",
-    downsellUrlPlaceholder: "Din Shopify kollektion-URL",
+    downsellUrlPlaceholder: "Din Shopify collection URL",
     downsellEmailPlaceholder: "Din e-mail",
-    downsellSubmit: "Få gratis kollektionstekst",
+    downsellSubmit: "Få gratis AI SEO tekst",
 
     trustTitle: "Bygget af Plutonic Media",
     trustDesc: "Danmarks AI-first digitale bureau. Vi kombinerer banebrydende AI med gennemprøvede marketingstrategier.",
@@ -243,7 +243,7 @@ export const translations = {
 
     thankYouTitle: "Tak!",
     thankYouMessage: "Vi har modtaget dine oplysninger og vender tilbage hurtigst muligt.",
-    thankYouBack: "Tilbage til Forsiden",
+    thankYouBack: "Tilbage til forsiden",
   },
 } as const;
 
