@@ -336,6 +336,7 @@ const ResultsSection = ({ answers }: ResultsSectionProps) => {
             </motion.h2>
 
             {/* Feature Cards */}
+            <TooltipProvider>
             <div className="grid gap-4">
               {featureCards.map((card, i) => (
                 <motion.div
@@ -356,22 +357,58 @@ const ResultsSection = ({ answers }: ResultsSectionProps) => {
                         <p className="text-sm text-muted-foreground leading-relaxed">
                           {t(card.descKey) as string}
                         </p>
+                        {(card as any).hasTooltips && (
+                          <div className="flex flex-wrap gap-2 mt-2">
+                            {tooltipTerms.map((tt) => (
+                              <Tooltip key={tt.term}>
+                                <TooltipTrigger asChild>
+                                  <span className="text-xs font-medium text-primary bg-primary/10 px-2 py-0.5 rounded-full cursor-help border border-primary/20">
+                                    {tt.term}
+                                  </span>
+                                </TooltipTrigger>
+                                <TooltipContent side="top" className="max-w-[240px] text-xs">
+                                  {tt.desc}
+                                </TooltipContent>
+                              </Tooltip>
+                            ))}
+                          </div>
+                        )}
+                        {(card as any).extraKey && (
+                          <p className="text-xs text-muted-foreground leading-relaxed mt-2 italic">
+                            {t((card as any).extraKey) as string}
+                          </p>
+                        )}
                       </div>
                     </CardContent>
                   </Card>
                 </motion.div>
               ))}
             </div>
+            </TooltipProvider>
 
             {/* Trust bar with award images */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.5 }}
-              className="flex items-center justify-center gap-6 py-4"
+              className="flex flex-col sm:flex-row items-center justify-center gap-6 py-4"
             >
-              <img src={reaktionBadge} alt="Reaktion Case Competition Winner" className="h-14 md:h-16 w-auto object-contain" />
-              <img src={searchAwardsBadge} alt="European Search Awards 2025 Finalist" className="h-14 md:h-16 w-auto object-contain" />
+              <img src={reaktionBadge} alt="Reaktion Case Competition Winner" className="w-full max-w-[200px] sm:max-w-[220px] object-contain" />
+              <img src={searchAwardsBadge} alt="European Search Awards 2025 Finalist" className="w-full max-w-[200px] sm:max-w-[220px] object-contain" />
+            </motion.div>
+
+            {/* SEO Expert Quote */}
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.6 }}
+              className="text-center py-4"
+            >
+              <Quote className="h-5 w-5 text-accent mx-auto mb-2" />
+              <p className="font-sora text-base md:text-lg font-bold text-primary italic leading-relaxed max-w-md mx-auto">
+                {t("seoExpertQuote") as string}
+              </p>
+            </motion.div>
             </motion.div>
 
             {/* CTA buttons */}
