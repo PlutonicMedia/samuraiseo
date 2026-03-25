@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
 import { toast } from "sonner";
 import { LogOut, Save, Mail, Trash2 } from "lucide-react";
-import samuraiLogo from "@/assets/samurai-logo.png";
+import plutonicLogo from "@/assets/plutonic-logo.png";
 
 const Admin = () => {
   const navigate = useNavigate();
@@ -123,7 +123,7 @@ const Admin = () => {
     <div className="min-h-screen bg-background">
       <header className="border-b border-border/50 px-6 py-4 flex justify-between items-center">
         <div className="flex items-center gap-2">
-          <img src={samuraiLogo} alt="Samurai SEO" className="h-10 w-auto" />
+          <a href="https://samurai.plutonic.dk/"><img src={plutonicLogo} alt="Samurai SEO" className="h-10 w-auto" /></a>
           <span className="font-sora text-lg font-bold text-primary">Admin</span>
         </div>
         <Button variant="ghost" onClick={handleLogout} className="gap-2">

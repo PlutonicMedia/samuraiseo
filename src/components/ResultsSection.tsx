@@ -32,6 +32,7 @@ const contactSchema = z.object({
   name: z.string().trim().min(1).max(100),
   phone: z.string().trim().min(1).max(30),
   email: z.string().trim().email().max(255),
+  role: z.string().trim().max(100).optional(),
   company: z.string().trim().min(1).max(200),
 });
 
@@ -82,7 +83,7 @@ const ResultsSection = ({ answers }: ResultsSectionProps) => {
   const navigate = useNavigate();
   const [page, setPage] = useState<ResultPage>("pain");
   const [ctaState, setCTAState] = useState<CTAState>("idle");
-  const [contact, setContact] = useState({ name: "", phone: "", email: "", company: "" });
+  const [contact, setContact] = useState({ name: "", phone: "", email: "", role: "", company: "" });
   const [seoUrl, setSeoUrl] = useState("");
   const [seoEmail, setSeoEmail] = useState("");
   const [submitting, setSubmitting] = useState(false);
@@ -139,6 +140,7 @@ const ResultsSection = ({ answers }: ResultsSectionProps) => {
         name: result.data.name,
         phone: result.data.phone,
         email: result.data.email,
+        role: result.data.role || null,
         company: result.data.company,
         product_count: answers.productCount,
         expected_volume: answers.expectedVolume,
@@ -499,7 +501,8 @@ const ResultsSection = ({ answers }: ResultsSectionProps) => {
                         <Input placeholder={t("contactName") as string} value={contact.name} onChange={(e) => setContact((c) => ({ ...c, name: e.target.value }))} className="rounded-xl" required maxLength={100} />
                         <Input placeholder={t("contactPhone") as string} value={contact.phone} onChange={(e) => setContact((c) => ({ ...c, phone: e.target.value }))} className="rounded-xl" required maxLength={30} />
                         <Input type="email" placeholder={t("contactEmail") as string} value={contact.email} onChange={(e) => setContact((c) => ({ ...c, email: e.target.value }))} className="rounded-xl" required maxLength={255} />
-                        <Input type="url" placeholder={t("contactCompany") as string} value={contact.company} onChange={(e) => setContact((c) => ({ ...c, company: e.target.value }))} className="rounded-xl" required maxLength={200} />
+                        <Input placeholder={t("contactRole") as string} value={contact.role} onChange={(e) => setContact((c) => ({ ...c, role: e.target.value }))} className="rounded-xl" maxLength={100} />
+                        <Input type="text" placeholder={t("contactCompany") as string} value={contact.company} onChange={(e) => setContact((c) => ({ ...c, company: e.target.value }))} className="rounded-xl" required maxLength={200} />
                         <Button type="submit" disabled={submitting} className="w-full rounded-full py-6 text-base font-semibold gap-2 bg-primary text-primary-foreground">
                           <Send className="h-4 w-4" />
                           {t("contactSubmit") as string}
