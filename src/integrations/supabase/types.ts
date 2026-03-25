@@ -113,6 +113,7 @@ export type Database = {
           phone: string
           product_count: number | null
           revenue_range: string | null
+          role: string | null
           saved_hours: number | null
           time_per_item: number | null
         }
@@ -127,6 +128,7 @@ export type Database = {
           phone: string
           product_count?: number | null
           revenue_range?: string | null
+          role?: string | null
           saved_hours?: number | null
           time_per_item?: number | null
         }
@@ -141,6 +143,7 @@ export type Database = {
           phone?: string
           product_count?: number | null
           revenue_range?: string | null
+          role?: string | null
           saved_hours?: number | null
           time_per_item?: number | null
         }
