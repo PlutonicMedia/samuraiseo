@@ -75,7 +75,7 @@ const QuizFlow = () => {
         <Button
           size="lg"
           onClick={startQuiz}
-          className="rounded-full px-10 py-6 text-lg font-semibold gap-2 bg-primary text-primary-foreground hover:bg-primary/90 shadow-lg hover:shadow-xl transition-all"
+          className="rounded-full px-10 py-6 text-base md:text-lg font-semibold gap-2 bg-primary text-primary-foreground hover:bg-primary/90 shadow-lg hover:shadow-xl transition-all"
         >
           {t("heroCta") as string}
           <ArrowRight className="h-5 w-5" />
