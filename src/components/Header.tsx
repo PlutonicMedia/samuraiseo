@@ -2,6 +2,7 @@ import { useLanguage } from "@/i18n/LanguageContext";
 import { Globe, Phone, Mail, RotateCcw } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import plutonicLogo from "@/assets/plutonic-logo.png";
+import plutonicIcon from "@/assets/plutonic-icon.png";
 
 const Header = () => {
   const { t, toggleLanguage, language } = useLanguage();
@@ -33,7 +34,8 @@ const Header = () => {
         {/* Center: Logo (absolutely centered) */}
         <div className="absolute left-1/2 -translate-x-1/2">
           <a href="https://samurai.plutonic.dk/">
-            <img src={plutonicLogo} alt="Samurai SEO" className="h-14 w-auto object-fill py-[7px]" />
+            <img src={plutonicLogo} alt="Samurai SEO" className="h-14 w-auto object-fill py-[7px] hidden md:block" />
+            <img src={plutonicIcon} alt="Samurai SEO" className="h-10 w-auto md:hidden" />
           </a>
         </div>
 
