@@ -32,7 +32,7 @@ const contactSchema = z.object({
   name: z.string().trim().min(1).max(100),
   phone: z.string().trim().min(1).max(30),
   email: z.string().trim().email().max(255),
-  company: z.string().trim().min(1).max(200).url({ message: "Enter a valid URL" }).or(z.string().trim().min(1).max(200)),
+  company: z.string().trim().min(1).max(200),
 });
 
 function useAnimatedCounter(target: number, duration = 1500) {
