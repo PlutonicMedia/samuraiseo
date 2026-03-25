@@ -2,6 +2,7 @@ import { useLanguage } from "@/i18n/LanguageContext";
 import { Globe, Phone, Mail, RotateCcw } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import plutonicLogo from "@/assets/plutonic-logo.png";
+import plutonicIcon from "@/assets/plutonic-icon.png";
 
 const Header = () => {
   const { t, toggleLanguage, language } = useLanguage();
