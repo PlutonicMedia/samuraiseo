@@ -124,7 +124,9 @@ const ResultsSection = ({ answers }: ResultsSectionProps) => {
     }
     setSubmitting(true);
     try {
+      const submissionId = crypto.randomUUID();
       const { error } = await supabase.from("quiz_submissions").insert({
+        id: submissionId,
         name: result.data.name,
         phone: result.data.phone,
         email: result.data.email,
@@ -137,18 +139,30 @@ const ResultsSection = ({ answers }: ResultsSectionProps) => {
       });
       if (error) throw error;
       trackCustomEvent("LeadFormSubmit", { userMonthlyHours });
-      // Fire notification email (non-blocking)
-      supabase.functions.invoke("notify-submission", {
-        body: {
-          type: "quiz_submission",
-          record: {
-            name: result.data.name, email: result.data.email, phone: result.data.phone,
-            company: result.data.company, product_count: answers.productCount,
-            expected_volume: answers.expectedVolume, time_per_item: answers.timePerItem,
-            revenue_range: answers.revenueRange, saved_hours: userMonthlyHours,
+
+      // Fetch notification email from settings then send via transactional email
+      const { data: settings } = await supabase
+        .from("site_settings")
+        .select("notification_email")
+        .eq("id", 1)
+        .single();
+      const notifEmail = settings?.notification_email;
+      if (notifEmail) {
+        supabase.functions.invoke("send-transactional-email", {
+          body: {
+            templateName: "lead-notification",
+            recipientEmail: notifEmail,
+            idempotencyKey: `quiz-lead-${submissionId}`,
+            templateData: {
+              type: "quiz_submission",
+              name: result.data.name, email: result.data.email, phone: result.data.phone,
+              company: result.data.company, productCount: answers.productCount,
+              expectedVolume: answers.expectedVolume, timePerItem: answers.timePerItem,
+              revenueRange: answers.revenueRange, savedHours: userMonthlyHours,
+            },
           },
-        },
-      }).catch(console.error);
+        }).catch(console.error);
+      }
       navigate("/thank-you");
     } catch {
       toast.error("Something went wrong. Please try again.");
@@ -165,13 +179,27 @@ const ResultsSection = ({ answers }: ResultsSectionProps) => {
     if (!/^https?:\/\//i.test(url)) url = "https://" + url;
     setSubmittingSeo(true);
     try {
-      const { error } = await supabase.from("seo_text_requests").insert({ website_url: url, email });
+      const seoId = crypto.randomUUID();
+      const { error } = await supabase.from("seo_text_requests").insert({ id: seoId, website_url: url, email });
       if (error) throw error;
       trackCustomEvent("SeoTextRequest", { url, email });
-      // Fire notification email (non-blocking)
-      supabase.functions.invoke("notify-submission", {
-        body: { type: "seo_request", record: { website_url: url, email } },
-      }).catch(console.error);
+      // Fetch notification email from settings then send via transactional email
+      const { data: settings } = await supabase
+        .from("site_settings")
+        .select("notification_email")
+        .eq("id", 1)
+        .single();
+      const notifEmail = settings?.notification_email;
+      if (notifEmail) {
+        supabase.functions.invoke("send-transactional-email", {
+          body: {
+            templateName: "lead-notification",
+            recipientEmail: notifEmail,
+            idempotencyKey: `seo-lead-${seoId}`,
+            templateData: { type: "seo_request", websiteUrl: url, email },
+          },
+        }).catch(console.error);
+      }
       navigate("/thank-you");
     } catch {
       toast.error("Something went wrong. Please try again.");
