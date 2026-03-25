@@ -1,38 +1,36 @@
 
 
-## Problem Analysis
+## Plan: Header logo swap, form updates, and "Start over" button
 
-The Resend integration is failing with a **403 error**: "You can only send testing emails to your own email address (analytics@plutonic.dk)." This happens because the Resend API key is on the free tier without a verified sending domain.
+### 1. Replace logo across the app
+- Copy `user-uploads://Logo-plutonic-stor_1.png` to `src/assets/plutonic-logo.png`
+- In **Header.tsx**, **Admin.tsx**, and **AdminLogin.tsx**: replace `samurai-logo.png` import with the new logo
+- Wrap the logo `<img>` in an `<a href="https://samurai.plutonic.dk/">` link (opens in same tab or new tab as appropriate)
 
-Additionally, your domain `notify.plutonic.dk` is **already verified and active** with Lovable's built-in email system. This means Resend cannot verify DNS on this subdomain anyway (NS delegation conflict). Switching to Lovable's email system is the right move.
+### 2. Add "Role" field to contact form
+- Add `contactRole` translation key: EN = "Role", DA = "Rolle"
+- Add `role` to the `contact` state object and `contactSchema` in **ResultsSection.tsx**
+- Add a new `<Input>` for role between email and website fields
+- Include `role` in the Supabase insert for `quiz_submissions` (requires adding a `role` column to the table via migration)
 
-## Plan
+### 3. Fix website field — remove URL type
+- Change `type="url"` to `type="text"` on the website input (line 502 in ResultsSection.tsx)
+- The Zod schema already validates as plain text (`z.string().trim().min(1).max(200)`)
 
-### Step 1: Set up email infrastructure
-Run the email infrastructure setup to create the queue system, database tables, and cron job needed for reliable email delivery.
+### 4. Add "Start over" button in header
+- Add `startOver` translation key: EN = "Start over", DA = "Start forfra"
+- In **Header.tsx**, add a button next to the language switcher that reloads the page (`window.location.href = "/"`) to reset quiz state
+- Style it consistently with the language toggle (rounded-full, transparent, white text)
 
-### Step 2: Create a notification email template
-Create a React Email template (`lead-notification.tsx`) for admin notifications when a new quiz submission or SEO request comes in. This replaces the Resend-based edge function.
+### Database migration
+- Add `role` column (nullable text) to `quiz_submissions` table
 
-### Step 3: Register the template
-Add it to the transactional email template registry.
-
-### Step 4: Update ResultsSection.tsx
-Replace the two `supabase.functions.invoke("notify-submission", ...)` calls with calls to `send-transactional-email` using the new template. The notification email will be sent to the admin email configured in `site_settings`.
-
-### Step 5: Deploy edge functions
-Deploy all updated edge functions (`send-transactional-email`).
-
-### Step 6: Clean up
-Remove the old `notify-submission` edge function since it's no longer needed.
-
-### What stays the same
-- Admin settings page for configuring notification email address
-- All quiz submission and SEO request database inserts
-- The `RESEND_API_KEY` secret can be removed later if desired
-
-### Technical detail
-- The notification email is a **transactional email** (triggered by a specific user action — form submission — and the admin expects it)
-- The template will fetch the `notification_email` from `site_settings` and pass it as `recipientEmail`
-- Emails will be queued via pgmq with automatic retry, rate-limit handling, and dead-letter support
+### Files changed
+- `src/assets/plutonic-logo.png` (new)
+- `src/components/Header.tsx`
+- `src/pages/Admin.tsx`
+- `src/pages/AdminLogin.tsx`
+- `src/components/ResultsSection.tsx`
+- `src/i18n/translations.ts`
+- New migration for `role` column
 
