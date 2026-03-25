@@ -5,7 +5,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
-import samuraiLogo from "@/assets/samurai-logo.png";
+import plutonicLogo from "@/assets/plutonic-logo.png";
 
 const AdminLogin = () => {
   const [email, setEmail] = useState("");
@@ -40,7 +40,7 @@ const AdminLogin = () => {
       <Card className="w-full max-w-sm shadow-lg">
         <CardContent className="pt-8 pb-8">
           <div className="text-center mb-6">
-            <img src={samuraiLogo} alt="Samurai SEO" className="h-12 w-auto mx-auto mb-3" />
+            <a href="https://samurai.plutonic.dk/"><img src={plutonicLogo} alt="Samurai SEO" className="h-12 w-auto mx-auto mb-3" /></a>
             <h1 className="font-sora text-xl font-bold text-primary">
               {isSignUp ? "Admin Sign Up" : "Admin Login"}
             </h1>

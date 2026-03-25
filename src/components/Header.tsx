@@ -1,7 +1,7 @@
 import { useLanguage } from "@/i18n/LanguageContext";
-import { Globe, Phone, Mail } from "lucide-react";
+import { Globe, Phone, Mail, RotateCcw } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import samuraiLogo from "@/assets/samurai-logo.png";
+import plutonicLogo from "@/assets/plutonic-logo.png";
 
 const Header = () => {
   const { t, toggleLanguage, language } = useLanguage();
@@ -32,11 +32,22 @@ const Header = () => {
 
         {/* Center: Logo (absolutely centered) */}
         <div className="absolute left-1/2 -translate-x-1/2">
-          <img src={samuraiLogo} alt="Samurai SEO" className="h-14 w-auto" />
+          <a href="https://samurai.plutonic.dk/">
+            <img src={plutonicLogo} alt="Samurai SEO" className="h-14 w-auto" />
+          </a>
         </div>
 
-        {/* Right: Language toggle */}
-        <div className="z-10">
+        {/* Right: Start over + Language toggle */}
+        <div className="z-10 flex items-center gap-2">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => { window.location.href = "/"; }}
+            className="gap-2 rounded-full border-white/20 bg-transparent text-white hover:bg-white/10 hover:text-white transition-all"
+          >
+            <RotateCcw className="h-4 w-4" />
+            <span className="hidden sm:inline">{t("startOver") as string}</span>
+          </Button>
           <Button
             variant="outline"
             size="sm"

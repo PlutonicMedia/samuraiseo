@@ -5,6 +5,7 @@ export const translations = {
     // Header
     langSwitch: "DA",
     poweredBy: "by Plutonic Media",
+    startOver: "Start over",
 
     // Hero
     heroTitle: "Say goodbye to manual product creation and SEO optimization.",
@@ -100,6 +101,7 @@ export const translations = {
     contactName: "Name",
     contactPhone: "Phone",
     contactEmail: "Email",
+    contactRole: "Role",
     contactCompany: "Website",
     contactSubmit: "Book a Demo",
 
@@ -144,6 +146,7 @@ export const translations = {
   da: {
     langSwitch: "EN",
     poweredBy: "af Plutonic Media",
+    startOver: "Start forfra",
 
     heroTitle: "Sig farvel til manuel produktoprettelse og SEO-optimering.",
     heroSubtitle: "Samurai tilbyder 100% SEO-optimering af høj kvalitet for alle dine collections og produkter — drevet af AI.",
@@ -230,6 +233,7 @@ export const translations = {
     contactName: "Navn",
     contactPhone: "Telefon",
     contactEmail: "E-mail",
+    contactRole: "Rolle",
     contactCompany: "Website",
     contactSubmit: "Book en demo",
 
