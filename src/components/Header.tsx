@@ -34,7 +34,8 @@ const Header = () => {
         {/* Center: Logo (absolutely centered) */}
         <div className="absolute left-1/2 -translate-x-1/2">
           <a href="https://samurai.plutonic.dk/">
-            <img src={plutonicLogo} alt="Samurai SEO" className="h-14 w-auto object-fill py-[7px]" />
+            <img src={plutonicLogo} alt="Samurai SEO" className="h-14 w-auto object-fill py-[7px] hidden md:block" />
+            <img src={plutonicIcon} alt="Samurai SEO" className="h-10 w-auto md:hidden" />
           </a>
         </div>
 
