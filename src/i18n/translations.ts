@@ -100,7 +100,7 @@ export const translations = {
     contactName: "Name",
     contactPhone: "Phone",
     contactEmail: "Email",
-    contactCompany: "Company",
+    contactCompany: "Website",
     contactSubmit: "Book a Demo",
 
     // Downsell CTA
@@ -230,7 +230,7 @@ export const translations = {
     contactName: "Navn",
     contactPhone: "Telefon",
     contactEmail: "E-mail",
-    contactCompany: "Virksomhed",
+    contactCompany: "Website",
     contactSubmit: "Book en demo",
 
     downsellTitle: "Oplev kvaliteten.",
