@@ -72,11 +72,15 @@ export const translations = {
 
     // Feature cards
     featureCard1Title: "Shopify Integration",
-    featureCard1Desc: "Collect and optimize any product — new or existing.",
+    featureCard1Desc: "Collect and optimize any product — new or existing. Everything is managed centrally from Samurai with intelligent AI control.",
     featureCard2Title: "2026-Ready Automation",
     featureCard2Desc: "Metadata, text, FAQ, schema, and internal links.",
-    featureCard3Title: "Award-Winning Growth",
-    featureCard3Desc: "Winner of Reaktion 2025 and European Search Awards finalist.",
+    featureCard2Extra: "We generate complete content: from compelling product descriptions to full SEO texts with correct headings and content that perfectly matches search intent.",
+    featureCard3Title: "Data-Driven AI SEO",
+    featureCard3Desc: "We always use the latest AI models combined with complex workflows. Samurai analyzes your Shopify data, crawls top SERP results, 'People Also Ask' and related searches, plus live URLs and Google Search Console data to ensure best-practice optimization.",
+    featureCard4Title: "Award-Winning Results",
+    featureCard4Desc: "Winner of Reaktion 2025 Case Competition and European Search Awards finalist. Our solution saves enormous amounts of time without compromising quality, creating the foundation for exponential growth.",
+    seoExpertQuote: "We are SEO experts who use AI — not AI experts with no knowledge of SEO.",
 
     // CTAs
     fillFormCta: "Fill Out the Form",
