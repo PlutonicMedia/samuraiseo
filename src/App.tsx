@@ -9,6 +9,7 @@ import ThankYou from "./pages/ThankYou";
 import Admin from "./pages/Admin";
 import AdminLogin from "./pages/AdminLogin";
 import NotFound from "./pages/NotFound";
+import Unsubscribe from "./pages/Unsubscribe";
 import { useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { initFacebookPixel } from "@/lib/facebook-pixel";
@@ -45,6 +46,7 @@ const App = () => (
             <Route path="/thank-you" element={<ThankYou />} />
             <Route path="/admin" element={<Admin />} />
             <Route path="/admin/login" element={<AdminLogin />} />
+            <Route path="/unsubscribe" element={<Unsubscribe />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
