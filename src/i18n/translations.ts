@@ -83,7 +83,7 @@ export const translations = {
 
     // CTAs
     fillFormCta: "Fill Out the Form",
-    bookMeetingCta: "Book a Meeting with a Specialist",
+    bookMeetingCta: "Book a Demo",
     notReadyCta: "No thanks, I'm not ready yet",
     hubspotPlaceholder: "HubSpot Calendar Embed — configure URL in admin settings",
 
@@ -214,7 +214,7 @@ export const translations = {
     featureCard4Desc: "Vinder af Reaktion 2025 Case Competition og nomineret til European Search Awards. Vores løsning sparer enorme mængder tid uden at gå på kompromis med kvaliteten, hvilket skaber fundamentet for eksponentiel vækst.",
 
     fillFormCta: "Udfyld formularen",
-    bookMeetingCta: "Book et møde med en specialist",
+    bookMeetingCta: "Book en demo",
     notReadyCta: "Nej tak, jeg er ikke klar endnu",
     hubspotPlaceholder: "HubSpot Kalender Embed — konfigurer URL i admin-indstillinger",
 
